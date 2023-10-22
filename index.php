@@ -7,6 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-   
+<a href="./public/views/main.html">
+    <button>Go To Main Page</button>
+</a>
 </body>
 </html>
