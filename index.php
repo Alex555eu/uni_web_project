@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="style" type="text/css" href="./public/css/style.css">
-    <title>Document</title>
-</head>
-<body>
-<a href="./public/views/main.html">
-    <button>Go To Main Page</button>
-</a>
-</body>
-</html>
+<?php
+
+require "Routing.php";
+
+$path = trim($_SERVER['REQUEST_URI'], '/');
+$path = parse_url($path, PHP_URL_PATH);
+
+Routing::get('index', 'DefaultController');
+Routing::get('projects', 'DefaultController');
+Routing::run($path);
