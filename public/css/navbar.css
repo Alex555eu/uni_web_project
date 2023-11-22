@@ -1,0 +1,136 @@
+
+html {
+    scroll-behavior: smooth;
+  }
+  
+  
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: rgb(255, 255, 255);
+  
+  
+}
+  
+
+
+/*==================== N A V B A R =============================*/
+.navbar-bg {
+  width: 100vw;
+  height: 10%;
+  position: fixed;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.navbar-bg img {
+  width: 100%;
+  height: auto;
+}
+
+.navbar {
+  width: 100vw;
+  height: 10%;
+  position: fixed;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  transition: 0.3s ease;
+}
+
+.logo {
+  height: 100%;
+  width: auto;
+}
+
+.logo img {
+  height: 100%;
+  width: auto;
+}
+
+.options {
+  flex-grow: 1;
+  height: 100%;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  float: right;
+
+}
+
+.options a {
+  margin: 0% 1% 0% 1%;
+  padding: 1% 1% 1% 1%;
+  text-decoration: none;
+  text-align: center;
+  color: #000000;
+  font-size: 26px;
+  border-radius: 5px;
+}
+
+.options a:hover {
+  background: rgba(221, 118, 223, 1.0); 
+  color:rgba(0, 0, 0, 0.993);
+}
+
+.options a:active {
+  background: rgb(255, 255, 255); 
+  color:rgba(0, 0, 0, 0.993);
+}
+
+.navbar .icon {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-grow: 1;
+  display: none;
+}
+
+.navbar .icon a {
+  text-decoration: none;
+  font-size: 36px;
+  color: #000000;
+}
+
+@media screen and (max-width: 900px) {
+  .navbar .options {
+    display: none;
+  }
+  .navbar .icon {
+    display: flex;
+    margin-right: 5%;
+  }
+  .navbar .icon a {
+    font-size: 48px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .navbar.responsive .options {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    top: 100%;
+    width: 100vw;
+    height: auto;
+  }
+  .navbar.responsive .options a {
+    display: block;
+    width: 90vw;
+    height: auto;
+
+  }
+/*   .navbar.responsive .options a:hover {
+    background: rgba(221, 118, 223, 1.0); 
+    color:rgba(0, 0, 0, 0.993);
+  }
+  .navbar.responsive .options a:active {
+    background: rgb(255, 255, 255); 
+    color:rgba(0, 0, 0, 0.993);
+  }
+   */
+}
+
