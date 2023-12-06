@@ -11,7 +11,7 @@ body {
   
   
 }
-  
+ 
 
 
 /*==================== N A V B A R =============================*/
@@ -21,6 +21,8 @@ body {
   position: fixed;
   overflow: hidden;
   z-index: 5;
+  top: 0;
+  left: 0;
 }
 
 .navbar-bg img {
@@ -95,7 +97,16 @@ body {
   color: #000000;
 }
 
+@media screen and (min-width: 901px) {
+  #mobile-bg-01 {
+    display: none;
+  }
+}
+ 
 @media screen and (max-width: 900px) {
+  .navbar-bg #dekstop-bg-01 {
+    display: none;
+  }
   .navbar .options {
     display: none;
   }
@@ -121,16 +132,6 @@ body {
     display: block;
     width: 90vw;
     height: auto;
-
   }
-/*   .navbar.responsive .options a:hover {
-    background: rgba(221, 118, 223, 1.0); 
-    color:rgba(0, 0, 0, 0.993);
-  }
-  .navbar.responsive .options a:active {
-    background: rgb(255, 255, 255); 
-    color:rgba(0, 0, 0, 0.993);
-  }
-   */
 }
 
