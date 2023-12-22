@@ -18,8 +18,12 @@ html {
   font-size: 0;
   font-family: Arial, sans-serif;
   background-color: rgb(255, 255, 255);
-    
+
   }
+
+ body::-webkit-scrollbar {
+     display: none;
+ }
 
 /*==================== MAIN GRAPHIC =============================*/
   
@@ -37,7 +41,7 @@ html {
 
 .image-container-01 {
   width: 100vw;
-  height: 10%;
+  height: 10vh;
   position: sticky;
   overflow: hidden;
   top: 0;
@@ -63,7 +67,7 @@ html {
 
 @media screen and (max-width: 900px) {
   .image-container-01 {
-    height: 20%;
+    height: 20vh;
   } 
   #img09 {
     display: none;
@@ -76,15 +80,49 @@ html {
 
 /*==================== P R O D U C T S =============================*/
  
-  .products {
-    /* padding-top: 10vh; */
+  .products-container {
+    padding-top: 10vh;
     font-size: medium;
     width: 100vw;
     height: auto;
     background-color: #FFF;
     z-index: 1;
 
- } 
+ }
+
+  .product-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    justify-content: space-evenly;
+  }
+
+  .product {
+    width: 20vw; /* Set initial width for 3 rectangles in a row */
+    margin: 2em;
+
+    background-color: #3498db;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+
+  }
+
+  @media screen and (max-width: 768px) {
+    .product {
+      width: 40vw;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .product {
+      width: 80vw;
+    }
+  }
+
+
+
 
 
 

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,40 +32,55 @@
 
 
     <div class="image-container-09">
-        <img id="img09" src="public/images/slice_09.svg">
+         <img id="img09" src="public/images/slice_09.svg">
         <img id="img09mob" src="public/images/slice_09_mob.svg">
     </div>
     
     <div class="image-container-01">
-        <img id="img01" src="public/images/slice_01.svg">
+         <img id="img01" src="public/images/slice_01.svg">
         <img id="img01mob" src="public/images/slice_01_mob.svg">
     </div>
 
-    <div class="products" id="products-container">
-        <h1>products1</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
-        <h1>products</h1>
+
+
+
+    <div class="products-container" id="products-container">
+        <?php
+        require_once __DIR__.'/../../src/models/Product.php';
+        require_once __DIR__.'/../../src/repository/ProductRepository.php';
+
+
+        $productsRepository = new ProductRepository();
+        $products = $productsRepository->getProducts("donuts");
+        // HTML generation
+        $html = '<div class="product-list">';
+
+        foreach ($products as $product) {
+            $html .= '<div class="product">';
+            $html .= '<h2>' . $product['name'] . '</h2>';
+            $html .= '<p><strong>Price:</strong> $' . $product['price'] . '</p>';
+            $html .= '</div>';
+        }
+
+        $html .= '</div>';
+
+        echo $html;
+        ?>
+        <h1>product</h1>
+        <h1>product</h1>
+        <h1>product</h1>
+        <h1>product</h1>
+        <h1>product</h1>
+        <h1>product</h1>
+        <h1>product</h1>
+        <h1>product</h1>
+        <h1>product</h1>
+        <h1>product</h1>
+        <h1>product</h1>
+        <h1>product</h1>
+        <h1>product</h1>
+
+
     </div>
 
 

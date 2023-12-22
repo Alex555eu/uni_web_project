@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,10 +10,10 @@
 
 <body>
 
- 
+
     <div class="navbar-bg" id="nbbg">
         <img id="dekstop-bg-01" src="public/images/slice_01.svg">
-        <img id="mobile-bg-01" src="public/images/slice_01_mob.svg"> 
+        <img id="mobile-bg-01" src="public/images/slice_01_mob.svg">
     </div>
     <div class="navbar" id="myNavbar">
        <div class="logo">
@@ -27,14 +28,11 @@
         </div>
         <div class="options">
             <a href="/main#products-container">Menu</a>
-            <a href="/locales">Locales</a>      
+            <a href="/locales">Locales</a>
             <a href="/cart">Cart</a>
             <a href="/login">Log in</a>
-        </div>    
+        </div>
     </div>
-
-    
-
 
 
 

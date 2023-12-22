@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,24 +34,13 @@
             <a href="/login">Log in</a>
         </div>    
     </div>
-<!-- 
-    <div class="messages">
-        <?php
-        if (isset($messages) && is_array($messages)) {
-            foreach ($messages as $message) {
-                echo $message;
-            }
-        }
-        ?>
-    </div>
- -->
 
     <div class="login-container">
         <div class="login-bg-container">
             <div>
                 <img src="public/images/logo.svg" alt="logo img">
             </div>
-            <form action="login_sec" method="POST">
+            <form action="login_secure" method="POST">
                 <input name="email" type="text" placeholder="email">
                 <input name="password" type="password" placeholder="password">
                 <button id="login-button" type="submit" >login</button>
@@ -60,6 +50,7 @@
             </a>
         </div>    
     </div>
+
 
 
 
