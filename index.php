@@ -11,4 +11,5 @@ Routing::get('cart', 'DefaultController');
 Routing::get('register', 'DefaultController');
 Routing::post('login', 'DefaultController');
 Routing::post('login_secure', 'SecurityController');
+Routing::post('register_secure', 'SecurityController');
 Routing::run($path);

@@ -48,6 +48,27 @@ class SecurityController extends AppController {
 
     }
 
+    public function register_secure() { //todo: add a check for existing account !!!!!
+
+        if (!$this->isPost()) {
+            return $this->render('login');
+        }
+
+        $name = $_POST['name'];
+        $surname = $_POST['surname'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $user = new User($email, $password, $name, $surname);
+
+        $userRepository = new UserRepository();
+
+        $userRepository->addUser($user);
+
+        $url = "http://" . $_SERVER['HTTP_HOST'];
+        header("Location: {$url}/register");
+
+    }
 
 
 
