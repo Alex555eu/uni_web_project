@@ -3,18 +3,36 @@
 
 class Product {
 
+    private $id;
     private $name;
     private $price;
     private $image;
     private $desc;
 
 
-    public function __construct($name, $price, $image, $desc)
+    public function __construct($id, $name, $price, $image, $desc)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->price = $price;
         $this->image = $image;
         $this->desc = $desc;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
     }
 
     /**

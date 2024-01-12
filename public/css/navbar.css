@@ -1,23 +1,22 @@
 
 html {
-    scroll-behavior: smooth;
-  }
-  
-  
+  scroll-behavior: smooth;
+}
+
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: rgb(255, 255, 255);
-  
-  
+
 }
- 
+
 
 
 /*==================== N A V B A R =============================*/
 .navbar-bg {
   width: 100vw;
-  height: 10%;
+  height: 10vh;
   position: fixed;
   overflow: hidden;
   z-index: 5;
@@ -32,18 +31,22 @@ body {
 
 .navbar {
   width: 100vw;
-  height: 10%;
+  height: 10vh;
   position: fixed;
+  top: 0;
+  left: 0;
   flex-direction: row;
   display: flex;
   align-items: center;
   z-index: 10;
   transition: 0.3s ease;
+
 }
 
 .logo {
   height: 100%;
   width: auto;
+
 }
 
 .logo img {
@@ -64,7 +67,7 @@ body {
 }
 
 .options a {
-  margin: 0% 1% 0% 1%;
+  margin: 0 1% 0 1%;
   padding: 1% 1% 1% 1%;
   text-decoration: none;
   text-align: center;
@@ -74,17 +77,16 @@ body {
 }
 
 .options a:hover {
-  background: rgba(221, 118, 223, 1.0); 
+  background: rgba(221, 118, 223, 1.0);
   color:rgba(0, 0, 0, 0.993);
 }
 
 .options a:active {
-  background: rgb(255, 255, 255); 
+  background: rgb(255, 255, 255);
   color:rgba(0, 0, 0, 0.993);
 }
 
 .navbar .icon {
-  display: flex;
   justify-content: flex-end;
   align-items: center;
   flex-grow: 1;
@@ -102,9 +104,9 @@ body {
     display: none;
   }
 }
- 
+
 @media screen and (max-width: 900px) {
-  .navbar-bg #dekstop-bg-01 {
+  .navbar-bg #desktop-bg-01 {
     display: none;
   }
   .navbar .options {

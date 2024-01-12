@@ -9,7 +9,7 @@ class ProductRepository extends Repository {
         $conn = $this->database->getConnection();
 
         $stmt = $conn->prepare(
-            'SELECT p.id, p.name, p.price
+            'SELECT p.id, p.name, p.price, p.image, p.desc
                     FROM public.product as p
                     JOIN public.product_category_assignment as pca ON p.id = pca.product_id
                     JOIN public.product_category as pc ON pca.product_category_id = pc.id
@@ -24,7 +24,12 @@ class ProductRepository extends Repository {
             return null;
         }
 
-        return $product;
+        $listOfProds = array();
+        foreach ($product as $el) {
+            $listOfProds[] = new Product($el['id'], $el['name'], $el['price'], $el['image'], $el['desc']);
+        }
+
+        return $listOfProds;
 
     }
 

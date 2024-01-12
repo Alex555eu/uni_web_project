@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+    <link href='https://fonts.googleapis.com/css?family=Knewave' rel='stylesheet'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="public/css/navbar.css">
   <link rel="stylesheet" type="text/css" href="public/css/main-page.css">
@@ -43,22 +44,35 @@
 
 
 
-
     <div class="products-container" id="products-container">
         <?php
         require_once __DIR__.'/../../src/models/Product.php';
         require_once __DIR__.'/../../src/repository/ProductRepository.php';
 
+        $cookie_name = "user_token";
+        if(!isset($_COOKIE[$cookie_name])) {
+            echo "Cookie named '" . $cookie_name . "' is not set!<br>";
+        } else {
+            echo "Cookie '" . $cookie_name . "' is set!<br>";
+            echo "Value is: " . $_COOKIE[$cookie_name] . "<br>";
+        }
 
         $productsRepository = new ProductRepository();
         $products = $productsRepository->getProducts("donuts");
-        // HTML generation
+
         $html = '<div class="product-list">';
 
         foreach ($products as $product) {
-            $html .= '<div class="product">';
-            $html .= '<h2>' . $product['name'] . '</h2>';
-            $html .= '<p><strong>Price:</strong> $' . $product['price'] . '</p>';
+            $html .= '<div class=product_wrapper>';
+                $html .= '<a href="/select_product/' . $product->getId() . '">';
+                    $html .= '<div class="product">';
+                        $html .= '<div class="product_img">';
+                            $html .= '<img src=' . $product->getImage() . '>';
+                        $html .= '</div>';
+                        $html .= '<h2>' . $product->getName() . '</h2>';
+                        $html .= '<p>'. $product->getPrice() . ' pln</p>';
+                    $html .= '</div>';
+                $html .= '</a>';
             $html .= '</div>';
         }
 
@@ -66,20 +80,6 @@
 
         echo $html;
         ?>
-        <h1>product</h1>
-        <h1>product</h1>
-        <h1>product</h1>
-        <h1>product</h1>
-        <h1>product</h1>
-        <h1>product</h1>
-        <h1>product</h1>
-        <h1>product</h1>
-        <h1>product</h1>
-        <h1>product</h1>
-        <h1>product</h1>
-        <h1>product</h1>
-        <h1>product</h1>
-
 
     </div>
 

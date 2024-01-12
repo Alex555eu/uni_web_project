@@ -15,7 +15,7 @@ function myFunction() {
     console.log(x.className);
   }
 
-
+/*
 function main() {
 
     let scrollPosition = 0;
@@ -41,4 +41,4 @@ function main() {
         });
       });
 
-} 
+}*/

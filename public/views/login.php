@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,10 +10,10 @@
 
 <body>
  
- 
+
     <div class="navbar-bg" id="nbbg">
-        <img id="dekstop-bg-01" src="public/images/slice_01.svg">
-        <img id="mobile-bg-01" src="public/images/slice_01_mob.svg"> 
+        <img id="desktop-bg-01" src="public/images/slice_01.svg">
+        <img id="mobile-bg-01" src="public/images/slice_01_mob.svg">
     </div>
     <div class="navbar" id="myNavbar">
        <div class="logo">
@@ -48,7 +47,7 @@
             <a href="/register" >
                 <button id="register-button">register</button> 
             </a>
-        </div>    
+        </div>
     </div>
 
 
