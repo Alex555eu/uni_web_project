@@ -10,6 +10,7 @@ class DefaultController extends AppController {
     }
 
     public function main() {
+
         $this->render('main-page');
     }
 
@@ -22,7 +23,7 @@ class DefaultController extends AppController {
     }
 
     public function login() {
-        $this->render('login', ['messages' => ["Hello za wuardoo !!!"]]);
+        $this->render('login');
     }
 
     public function register() {

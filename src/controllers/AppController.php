@@ -17,6 +17,13 @@ class AppController {
     }
 
     protected function render(string $template = null, array $variables = []) {
+
+        if ($_COOKIE['user_token']) {
+        $validate = new SecurityController();
+        $validate->validate_user_token();
+        //var_dump($validate);
+        }
+
         $templatePath = "public/views/".$template.'.php';
         $output = 'file not found';
 

@@ -9,14 +9,23 @@ class Product {
     private $image;
     private $desc;
 
+    public function setInventory($inventory): void
+    {
+        $this->inventory = $inventory;
+    }
+    private $category;
+    private $inventory;
 
-    public function __construct($id, $name, $price, $image, $desc)
+
+    public function __construct($id, $name, $price, $image, $desc, $category, $inventory)
     {
         $this->id = $id;
         $this->name = $name;
         $this->price = $price;
         $this->image = $image;
         $this->desc = $desc;
+        $this->category = $category;
+        $this->inventory = $inventory;
     }
 
     /**
@@ -99,7 +108,33 @@ class Product {
         $this->desc = $desc;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
 
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category): void
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInventory()
+    {
+        return $this->inventory;
+    }
+
+    /**
+     * @param mixed $inventory
+     */
 
 }
 

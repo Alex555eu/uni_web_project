@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-    <link href='https://fonts.googleapis.com/css?family=Knewave' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Knewave' rel='stylesheet'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="public/css/navbar.css">
   <link rel="stylesheet" type="text/css" href="public/css/main-page.css">
@@ -30,19 +30,29 @@
             <a href="/login">Log in</a>
         </div>    
     </div>
-
-
     <div class="image-container-09">
          <img id="img09" src="public/images/slice_09.svg">
         <img id="img09mob" src="public/images/slice_09_mob.svg">
     </div>
-    
     <div class="image-container-01">
          <img id="img01" src="public/images/slice_01.svg">
         <img id="img01mob" src="public/images/slice_01_mob.svg">
     </div>
 
 
+
+    <form id="store_select_form" action="/main#products-container" method="POST">
+        <select id="choose_store_id" name="selected_store" onchange="submitStoreSelectForm();">
+            <option>Choose location</option>
+            <option value="1">Krakow, ul.Warszawska</option>
+            <option value="2">Krakow, ul.Starowka</option>
+        </select>
+    </form>
+    <script>
+        function submitStoreSelectForm() {
+            document.getElementById("store_select_form").submit();
+        }
+    </script>
 
     <div class="products-container" id="products-container">
         <?php
@@ -57,14 +67,20 @@
             echo "Value is: " . $_COOKIE[$cookie_name] . "<br>";
         }
 
+        if ($_SERVER["REQUEST_METHOD"] == 'POST') {
+            $store_id = intval($_POST['selected_store']);
+            echo $store_id;
+        } else {
+            $store_id = 1;
+        }
         $productsRepository = new ProductRepository();
-        $products = $productsRepository->getProducts("donuts");
+        $products = $productsRepository->getProductsFromStoreByCategoryName($store_id, "donuts");
 
         $html = '<div class="product-list">';
 
         foreach ($products as $product) {
             $html .= '<div class=product_wrapper>';
-                $html .= '<a href="/select_product/' . $product->getId() . '">';
+                $html .= '<a href="/select_product?id=' . $product->getId() . '">';
                     $html .= '<div class="product">';
                         $html .= '<div class="product_img">';
                             $html .= '<img src=' . $product->getImage() . '>';
@@ -84,7 +100,6 @@
     </div>
 
 
-</body>
 
-
-</html>
+<!-- edit ends here -->
+<?php include("global_bottom.php"); ?>

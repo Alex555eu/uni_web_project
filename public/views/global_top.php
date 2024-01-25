@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="public/css/navbar.css">
-    <link rel="stylesheet" type="text/css" href="public/css/product.css">
     <script src="public/scripts/main.js"></script>
 </head>
 
@@ -15,7 +14,6 @@
     <img id="desktop-bg-01" src="public/images/slice_01.svg">
     <img id="mobile-bg-01" src="public/images/slice_01_mob.svg">
 </div>
-
 <div class="navbar" id="myNavbar">
     <div class="logo">
         <a href="/main">
@@ -34,26 +32,3 @@
         <a href="/login">Log in</a>
     </div>
 </div>
-
-<div class="pane">
-
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-
-</div>
-
-
-
-
-</body>
-
-
-</html>
