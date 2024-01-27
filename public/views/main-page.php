@@ -24,10 +24,30 @@
             </a>
         </div>
         <div class="options">
+            <?php
+            if(isset($user_data)) {
+                if ($user_data['authorization'] == 1) {
+                    $html = '<a href="';
+                    $html .= '/admin';
+                    $html .= '">AdminPanel</a>';
+                    echo $html;
+                }
+            }
+            ?>
             <a href="/main#products-container">Menu</a>
             <a href="/locales">Locales</a>      
             <a href="/cart">Cart</a>
-            <a href="/login">Log in</a>
+            <?php
+            $html = '<a href="';
+            if(isset($user_data)) {
+                $html .= '/user?session=' . $_COOKIE['user_token'];
+                $html .= '">myAccount</a>';
+            } else {
+                $html .= '/login';
+                $html .= '">Log in</a>';
+            }
+            echo $html;
+            ?>
         </div>    
     </div>
     <div class="image-container-09">
@@ -83,7 +103,7 @@
                 $html .= '<a href="/select_product?id=' . $product->getId() . '">';
                     $html .= '<div class="product">';
                         $html .= '<div class="product_img">';
-                            $html .= '<img src=' . $product->getImage() . '>';
+                            $html .= '<img src="' . $product->getImage() . '">';
                         $html .= '</div>';
                         $html .= '<h2>' . $product->getName() . '</h2>';
                         $html .= '<p>'. $product->getPrice() . ' pln</p>';

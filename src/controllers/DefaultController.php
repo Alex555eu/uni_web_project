@@ -30,5 +30,18 @@ class DefaultController extends AppController {
         $this->render('register');
     }
 
+    public function admin() {
+        $this->render('admin');
+    }
+
+    public function add_product() {
+        $this->render('add_product');
+    }
+
+    public function modify_product() {
+        $repo = new ProductRepository();
+        $prod = $repo->getAllProducts();
+        $this->render('modify_product', ['products' => $prod]);
+    }
 
 }

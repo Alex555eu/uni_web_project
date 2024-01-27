@@ -19,10 +19,6 @@
                             echo $msg;
                         }
                     }
-                if (isset($_GET['alert'])) {
-                    echo '<script>alert("Your session expired!")</script>';
-                }
-
                 ?>
                 <button id="login-button" type="submit" >login</button>
             </form>
@@ -32,6 +28,11 @@
         </div>
     </div>
 
+<?php
+if (isset($_GET['alert'])) {
+    echo '<script>alert("Your session expired!")</script>';
+}
+?>
 
 <!-- edit ends here -->
 <?php include("global_bottom.php"); ?>

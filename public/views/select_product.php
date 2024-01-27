@@ -5,28 +5,29 @@
 
 
 <div class="pane">
-
     <?php
-    require_once __DIR__.'/../../src/models/Product.php';
-    require_once __DIR__.'/../../src/repository/ProductRepository.php';
+    if (isset($product)) {
+        $html = '<div class="img_container">';
+        $html .= '<img src="' . $product->getImage() . '" alt="no image">';
+        $html .= '</div>';
 
-    if (!empty($args)) {
-        $productsRepository = new ProductRepository();
-        $products = $productsRepository->getProductsById($args[0]);
+        $html .= '<div class="product_info">';
+        $html .= '<output>' . $product->getName() . '</output>';
+        $html .= '<output>' . $product->getPrice() . '</output>';
+        $html .= '<output>amount</output>';
 
-        if ($products) { //todo: implement html/css
+        $html .= '<form action="addProductToCart" method="post">';
+        $html .= '<input type="hidden" name="product_id" value="' . $product->getId() . '">';
+        $html .= '<input type="number" step="1" value="1" name="quantity">';
+        $html .= '<button type="submit">add</button>';
+        $html .= '</form>';
+        $html .= '<output>' . $product->getDesc() . '</output>';
+        $html .= '</div>';
 
-            var_dump($products);
-
-            //echo $html;
-            return;
-        }
+        echo $html;
+    } else {
+        echo "No such product";
     }
-
-    echo "No such product";
-
-
-
     ?>
 </div>
 

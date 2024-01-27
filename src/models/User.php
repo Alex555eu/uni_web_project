@@ -48,7 +48,15 @@ class User {
         return $this->id;
     }
 
-
+    public function toArray() {
+        return [
+            'email' => $this->getEmail(),
+            'password' => $this->getPassword(),
+            'name' => $this->getName(),
+            'surname' => $this->getSurName(),
+            'id' => $this->getId()
+        ];
+    }
 
 
 }

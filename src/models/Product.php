@@ -8,24 +8,21 @@ class Product {
     private $price;
     private $image;
     private $desc;
-
-    public function setInventory($inventory): void
-    {
-        $this->inventory = $inventory;
-    }
-    private $category;
-    private $inventory;
+    private $category_id;
+    private $quantity;
+    private $store_id;
 
 
-    public function __construct($id, $name, $price, $image, $desc, $category, $inventory)
+    public function __construct($id, $name, $price, $image, $desc, $category_id, $quantity, $store_id)
     {
         $this->id = $id;
         $this->name = $name;
         $this->price = $price;
         $this->image = $image;
         $this->desc = $desc;
-        $this->category = $category;
-        $this->inventory = $inventory;
+        $this->category_id = $category_id;
+        $this->quantity = $quantity;
+        $this->store_id = $store_id;
     }
 
     /**
@@ -111,30 +108,53 @@ class Product {
     /**
      * @return mixed
      */
-    public function getCategory()
+    public function getCategoryId()
     {
-        return $this->category;
+        return $this->category_id;
     }
 
     /**
-     * @param mixed $category
+     * @param mixed $category_id
      */
-    public function setCategory($category): void
+    public function setCategoryId($category_id): void
     {
-        $this->category = $category;
+        $this->category_id = $category_id;
     }
 
     /**
      * @return mixed
      */
-    public function getInventory()
+    public function getQuantity()
     {
-        return $this->inventory;
+        return $this->quantity;
     }
 
     /**
-     * @param mixed $inventory
+     * @param mixed $quantity
      */
+    public function setQuantity($quantity): void
+    {
+        $this->quantity = $quantity;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStoreId()
+    {
+        return $this->store_id;
+    }
+
+    /**
+     * @param mixed $store_id
+     */
+    public function setStoreId($store_id): void
+    {
+        $this->store_id = $store_id;
+    }
+
+
+
 
 }
 

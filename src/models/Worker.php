@@ -22,5 +22,13 @@ class Worker extends User {
         return $this->store_id;
     }
 
+    public function toArray() {
+        $array = parent::toArray();
+        $array['store_id'] = $this->getStoreId();
+        $array['authorization'] = $this->getAuthorization();
+        return $array;
+    }
+
+
 
 }

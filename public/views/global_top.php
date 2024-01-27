@@ -26,9 +26,34 @@
         </a>
     </div>
     <div class="options">
+        <?php
+        if(isset($user_data)) {
+            if ($user_data['authorization'] == 1) {
+                $html = '<a href="';
+                $html .= '/admin';
+                $html .= '">AdminPanel</a>';
+                echo $html;
+            } else if ($user_data['authentication'] == 0) {
+                $html = '<a href="';
+                $html .= '/worker';
+                $html .= '">WorkerPanel</a>';
+                echo $html;
+            }
+        }
+        ?>
         <a href="/main#products-container">Menu</a>
         <a href="/locales">Locales</a>
         <a href="/cart">Cart</a>
-        <a href="/login">Log in</a>
+        <?php
+            $html = '<a href="';
+            if(isset($user_data)) {
+                $html .= '/user?session=' . $_COOKIE['user_token'];
+                $html .= '">myAccount</a>';
+            } else {
+                $html .= '/login';
+                $html .= '">Log in</a>';
+            }
+            echo $html;
+        ?>
     </div>
 </div>

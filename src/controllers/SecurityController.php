@@ -9,27 +9,20 @@
 class SecurityController extends AppController {
 
     public function login_secure() {
-
         $userRepository = new UserRepository();
-
-//        if (!$this->isPost()) {
-//            return $this->render('login');
-//        }
-
+        if (!$this->isPost()) {
+            return $this->render('login');
+        }
         $email = $_POST['email'];
         $password = $_POST['password'];
-
         $user = $userRepository->getUserByEmail($email);
-
         if(!$user) {
             return $this->render('login', ['messages' => ['user not found']]);
         }
-
         if($user->getPassword() !== md5($password)) {
             return $this->render('login', ['messages' => ['incorrect password']]);
         }
 
-        //todo: create session
         $new_session = $this->create_user_token($user->getId());
 
         setcookie("user_token", $new_session, time() + (365 * 24 * 60 * 60), '/');

@@ -26,18 +26,9 @@ class Routing {
 
         $object = new $controller();
 
-        if (is_a($object, 'ProductController')) {
-            $tmp = parse_url($path, PHP_URL_QUERY );
-            $tmp = intval(filter_var($tmp, FILTER_SANITIZE_NUMBER_INT));
-            if ($tmp != 0) {
-                $object->select_product($tmp);
-                return;
-            } else
-                die("Wrong url!");
+        $query = parse_url($path, PHP_URL_QUERY );
 
-        }
-
-        $object->$action();
+        $object->$action($query);
     }
 
 
