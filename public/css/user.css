@@ -1,0 +1,98 @@
+
+
+
+.user-container {
+    width: 100vw;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user_wrapper {
+    width: 30vw;
+    padding: 5%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    border-radius: 15px;
+    background: rgba(217, 217, 217, 0.66);
+    box-shadow: 10px 10px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.user_data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.user_data output {
+    margin-bottom: 0.5em;
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.user_data input {
+    border-style: none;
+    text-align: center;
+    background-color: transparent;
+    border-bottom: 2px solid rgb(221, 118, 223);
+    font-size: medium;
+    outline-style: none;
+
+}
+
+.user_data button {
+    margin-top: 10%;
+    margin-bottom: 5%;
+
+    width: 10vw;
+    height: 5vh;
+
+    border: transparent;
+    background: rgb(221, 118, 223);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+
+    letter-spacing: 4px;
+
+    cursor: pointer;
+}
+
+.user_data button:hover {
+    background-color: rgb(221, 118, 223, 0.75);
+}
+
+
+
+.user_data a {
+    display: flex;
+    text-decoration: none;
+
+    justify-content: center;
+    align-items: center;
+
+    color: black;
+
+    margin-top: 10%;
+    margin-bottom: 5%;
+
+    width: 10vw;
+    height: 5vh;
+
+    border: 2px black solid;
+    background: rgba(174, 121, 175, 0);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+
+    letter-spacing: 4px;
+
+    cursor: pointer;
+}
+.user_data a:hover {
+    background-color: rgb(65, 65, 65, 0.5);
+}

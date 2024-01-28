@@ -94,5 +94,55 @@ class UserRepository extends Repository {
         return true;
     }
 
+    public function deleteUserToken() {
+        $conn = $this->database->getConnection();
+        $conn->beginTransaction();
+        try {
+            $stmt = $conn->prepare(
+                'DELETE FROM public.shopping_session as ss WHERE ss.id = :session_id'
+            );
+            $stmt->bindParam(':session_id', $_COOKIE['user_token'], PDO::PARAM_STR);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            $conn->rollBack();
+            print($e->errorInfo);
+            return null;
+        }
+        $conn->commit();
+
+        setcookie("user_token", '', time() - 60, '/');
+
+        return 0;
+    }
+
+    public function updateUserData() {
+        $conn = $this->database->getConnection();
+        $conn->beginTransaction();
+        try {
+            $stmt = $conn->prepare(
+                'UPDATE public.user as u
+                        SET 
+		                first_name = :name,
+                        last_name = :surname,
+                        email_address = :email
+                        FROM public.shopping_session as ss
+                        WHERE u.id = ss.user_id
+                        AND ss.id = :session_id'
+            );
+            $stmt->bindParam(':name', $_POST['name'], PDO::PARAM_STR);
+            $stmt->bindParam(':surname', $_POST['surname'], PDO::PARAM_STR);
+            $stmt->bindParam(':email', $_POST['email'], PDO::PARAM_STR);
+            $stmt->bindParam(':session_id', $_COOKIE['user_token'], PDO::PARAM_STR);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            $conn->rollBack();
+            print($e->errorInfo);
+            return null;
+        }
+        $conn->commit();
+
+        return 0;
+    }
+
 
 }

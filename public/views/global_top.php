@@ -31,27 +31,27 @@
             if ($user_data['authorization'] == 1) {
                 $html = '<a href="';
                 $html .= '/admin';
-                $html .= '">AdminPanel</a>';
+                $html .= '" onclick="myFunction()">AdminPanel</a>';
                 echo $html;
             } else if ($user_data['authentication'] == 0) {
                 $html = '<a href="';
                 $html .= '/worker';
-                $html .= '">WorkerPanel</a>';
+                $html .= '" onclick="myFunction()">WorkerPanel</a>';
                 echo $html;
             }
         }
         ?>
-        <a href="/main#products-container">Menu</a>
-        <a href="/locales">Locales</a>
-        <a href="/cart">Cart</a>
+        <a href="/main#products-container" onclick="myFunction()">Menu</a>
+        <a href="/locales" onclick="myFunction()">Locales</a>
+        <a href="/cart" onclick="myFunction()">Cart</a>
         <?php
             $html = '<a href="';
             if(isset($user_data)) {
-                $html .= '/user?session=' . $_COOKIE['user_token'];
-                $html .= '">myAccount</a>';
+                $html .= '/user';
+                $html .= '" onclick="myFunction()">myAccount</a>';
             } else {
                 $html .= '/login';
-                $html .= '">Log in</a>';
+                $html .= '" onclick="myFunction()">Log in</a>';
             }
             echo $html;
         ?>

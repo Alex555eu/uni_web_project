@@ -14,11 +14,11 @@
         $html .= '<div class="product_info">';
         $html .= '<output>' . $product->getName() . '</output>';
         $html .= '<output>' . $product->getPrice() . '</output>';
-        $html .= '<output>amount</output>';
+        $html .= '<output>only ' . $product->getQuantity() . ' left in store</output>';
 
         $html .= '<form action="addProductToCart" method="post">';
         $html .= '<input type="hidden" name="product_id" value="' . $product->getId() . '">';
-        $html .= '<input type="number" step="1" value="1" name="quantity">';
+        $html .= '<input type="number" step="1" min="1" max="' . $product->getQuantity() . '" value="1" name="quantity">';
         $html .= '<button type="submit">add</button>';
         $html .= '</form>';
         $html .= '<output>' . $product->getDesc() . '</output>';

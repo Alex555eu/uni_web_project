@@ -63,7 +63,7 @@ class ProductRepository extends Repository {
         return $listOfProds;
     }
 
-    public function getProductsById(int $product_id) {
+    public function getProductById(int $product_id) {
         $conn = $this->database->getConnection();
 
         $stmt = $conn->prepare(

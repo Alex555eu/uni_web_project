@@ -20,7 +20,7 @@ class ProductController extends AppController {
     public function select_product(string $argument) {
         $argument = intval(filter_var($argument, FILTER_SANITIZE_NUMBER_INT)); // returns 0 on failure
         if ($argument != 0) {
-            $products = $this->productRepository->getProductsById($argument);
+            $products = $this->productRepository->getProductById($argument);
             $this->render('select_product', ['product' => $products]);
         }
         else

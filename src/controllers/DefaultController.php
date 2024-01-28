@@ -10,16 +10,19 @@ class DefaultController extends AppController {
     }
 
     public function main() {
-
         $this->render('main-page');
     }
 
     public function locales() {
-        $this->render('locales');
+        $repo = new LocationRepository();
+        $locations = $repo->getAllLocations();
+        $this->render('locales', ['locales' => $locations]);
     }
 
     public function cart() {
-        $this->render('cart');
+        $repo = new OrderRepository();
+        $cart_data = $repo->getAllCartItems();
+        $this->render('cart', ['cart_data' => $cart_data]);
     }
 
     public function login() {
@@ -42,6 +45,24 @@ class DefaultController extends AppController {
         $repo = new ProductRepository();
         $prod = $repo->getAllProducts();
         $this->render('modify_product', ['products' => $prod]);
+    }
+
+    public function user() {
+        $this->render('user');
+    }
+
+    public function logout() {
+        $repo = new UserRepository();
+        $repo->deleteUserToken();
+        $url = "http://" . $_SERVER['HTTP_HOST'];
+        header("Location: {$url}/main");
+    }
+
+    public function updateUserData() {
+        $repo = new UserRepository();
+        $repo->updateUserData();
+        $url = "http://" . $_SERVER['HTTP_HOST'];
+        header("Location: {$url}/user");
     }
 
 }

@@ -71,7 +71,7 @@ class SecurityController extends AppController {
                 setcookie("user_token", '', time() - 60, '/');
                 $url = "http://" . $_SERVER['HTTP_HOST'];
                 header("Location: {$url}/login?alert=expired");
-                return;
+                return 0;
             }
         }
         return null;

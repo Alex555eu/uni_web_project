@@ -18,8 +18,12 @@ class AppController {
 
     protected function render(string $template = null, array $variables = []) {
 
-        $validate = new SecurityController();
-        $validate->validate_user_token();
+        if(isset($_COOKIE['user_token'])) {
+            $validate = new SecurityController();
+            $tmp = $validate->validate_user_token();
+            if(!is_null($tmp))
+                return;
+        }
 
         $repo = new UserRepository();
         $user = $repo->getUserByToken($_COOKIE['user_token']);
