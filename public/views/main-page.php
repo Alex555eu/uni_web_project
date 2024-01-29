@@ -84,13 +84,13 @@
         require_once __DIR__.'/../../src/models/Product.php';
         require_once __DIR__.'/../../src/repository/ProductRepository.php';
 
-        $cookie_name = "user_token";
-        if(!isset($_COOKIE[$cookie_name])) {
-            echo "Cookie named '" . $cookie_name . "' is not set!<br>";
-        } else {
-            echo "Cookie '" . $cookie_name . "' is set!<br>";
-            echo "Value is: " . $_COOKIE[$cookie_name] . "<br>";
-        }
+//        $cookie_name = "user_token";
+//        if(!isset($_COOKIE[$cookie_name])) {
+//            echo "Cookie named '" . $cookie_name . "' is not set!<br>";
+//        } else {
+//            echo "Cookie '" . $cookie_name . "' is set!<br>";
+//            echo "Value is: " . $_COOKIE[$cookie_name] . "<br>";
+//        }
 
         if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             $store_id = intval($_POST['selected_store']);

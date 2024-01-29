@@ -19,7 +19,7 @@ class SecurityController extends AppController {
         if(!$user) {
             return $this->render('login', ['messages' => ['user not found']]);
         }
-        if($user->getPassword() !== md5($password)) {
+        if (!password_verify($password, $user->getPassword())) {
             return $this->render('login', ['messages' => ['incorrect password']]);
         }
 
@@ -39,7 +39,10 @@ class SecurityController extends AppController {
         $name = $_POST['name'];
         $surname = $_POST['surname'];
         $email = $_POST['email'];
-        $password = md5($_POST['password']);
+        $options = [
+            'cost' => 12, // do not touch
+        ];
+        $password = password_hash($_POST['password'], PASSWORD_BCRYPT, $options);
 
         $user = new User($email, $password, $name, $surname);
 
