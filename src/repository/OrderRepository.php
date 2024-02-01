@@ -42,12 +42,102 @@ class OrderRepository extends Repository {
 
         $cartItems = [];
         foreach ($result as $item) {
-            $cartItems[] = new CartItem($item['cart_item_id'], $item['product_id'], $item['name'], $item['price'], $item['image'], $item['description'], $item['product_category_id'], $item['inv_quantity'], $item['store_id'], $item['quantity']);
+            $cartItems[] = new CartItem($item['cart_item_id'], $item['quantity'], $item['product_id'], $item['name'], $item['price'], $item['image'], $item['description'], $item['product_category_id'], $item['inv_quantity'], $item['store_id']);
         }
 
         return $cartItems;
     }
 
+    public function removeItemFromCart(int $item_id) {
+        $conn = $this->database->getConnection();
+        $conn->beginTransaction();
+        try {
+            $stmt = $conn->prepare(
+                'DELETE FROM public.cart_item
+                    WHERE id = :cart_item_id'
+            );
+            $stmt->bindParam(':cart_item_id', $item_id, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            $conn->rollBack();
+            print($e->errorInfo);
+            return null;
+        }
+        $conn->commit();
+        return 0;
+    }
 
+    public function placeAnOrder() {
+        if (isset($_COOKIE['user_token'])) {
+            $conn = $this->database->getConnection();
+            $conn->beginTransaction();
+            try {
+                $stmt = $conn->prepare(
+                    'SELECT place_new_order(:session_id)'
+                );
+                $stmt->bindParam(':session_id', $_COOKIE['user_token'], PDO::PARAM_INT);
+                $stmt->execute();
+            } catch (PDOException $e) {
+                $conn->rollBack();
+                print($e->errorInfo);
+                return null;
+            }
+            $conn->commit();
+            return 0;
+        }
+        return null;
+    }
+
+    public function getOrdersHistory() {
+        $conn = $this->database->getConnection();
+        $conn->beginTransaction();
+        try {
+            $stmt = $conn->prepare(
+                'SELECT
+                            od.id,
+                            od.total,
+                            array_agg(distinct u.email_address) AS user_email,
+                            array_agg(ARRAY[p.id, oi.quantity]) AS product
+                       FROM
+                            public.order_details od
+                       JOIN
+                            public.order_item oi ON od.id = oi.details_id
+                       JOIN
+                            public.user u ON od.user_id = u.id
+                       JOIN
+	                	    public.product as p on p.id = oi.product_id
+                       GROUP BY
+                            od.id;'
+            );
+            $stmt->execute();
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $orders = array();
+            $repo = new ProductRepository();
+
+            foreach ($result as $res) {
+                $tmp = $res['product'];
+                $jsonString = str_replace(['{', '}'], ['[', ']'], $tmp);
+                $jsonDec = json_decode($jsonString, true);
+                $products = array();
+
+                foreach ($jsonDec as $product) {
+                $prod = $repo->getProductById($product[0]);
+                $prod->setQuantity($product[1]);
+                $products[] = $prod;
+                }
+                $orders[] = new Order($res['id'], $products, $res['total'], $res['user_email']);
+            }
+
+
+        } catch (PDOException $e) {
+            $conn->rollBack();
+            print($e->errorInfo);
+            return null;
+        }
+        $conn->commit();
+        return $orders;
+    }
 
 }

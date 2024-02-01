@@ -22,7 +22,8 @@
                 $html .= '<input type="hidden" name="store_id" value="' . $product->getStoreId() . '">';
                 $html .= '<input type="file" name="file"/>';
                 $html .= '<input name="name" type="text" placeholder="Product Name" value="' . $product->getName() . '"><br/>';
-                $html .= '<input name="price" type="text" placeholder="Product Price" value="' . $product->getPrice() . '"><br/>';
+                $html .= '<input name="price" type="text" placeholder="Product Price" value="' . $product->getPrice() . '">';
+                $html .= '<input name="quantity" type="number" step="1" placeholder="Quantity at shop inventory" value="' . $product->getQuantity() . '"><br/>';
                 $html .= '<textarea name="description" placeholder="Product Description">' . $product->getDesc() . '</textarea><br/>';
 
                 $repo = new LocationRepository();

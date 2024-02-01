@@ -12,6 +12,7 @@ Routing::get('register', 'DefaultController');
 Routing::get('select_product', 'ProductController');
 Routing::get('admin', 'DefaultController');
 Routing::get('user', 'DefaultController');
+Routing::get('orders_history', 'OrderController');
 
 Routing::post('add_product', 'DefaultController');
 Routing::post('addProduct', 'ProductController');
@@ -24,5 +25,8 @@ Routing::post('deleteProduct', 'ProductController');
 Routing::post('addProductToCart', 'OrderController');
 Routing::post('logout', 'DefaultController');
 Routing::post('updateUserData', 'DefaultController');
+Routing::post('removeItemFromCart', "OrderController");
+Routing::post('placeAnOrder', 'OrderController');
+
 
 Routing::run($path);

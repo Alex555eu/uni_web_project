@@ -16,6 +16,10 @@ class AppController {
         return $this->request === 'POST';
     }
 
+    protected function getReq() {
+        return $this->request;
+    }
+
     protected function render(string $template = null, array $variables = []) {
 
         if(isset($_COOKIE['user_token'])) {

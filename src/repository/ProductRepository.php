@@ -163,6 +163,19 @@ class ProductRepository extends Repository {
             $stmt->bindParam(':product_id', $product_id, PDO::PARAM_STR);
             $stmt->execute();
 
+            $stmt2 = $conn->prepare(
+                'UPDATE public.product_inventory as pi
+                        SET quantity = :quantity
+                        FROM public.product P
+                        WHERE pi.id = p.inventory_id
+                        AND p.id = :product_id'
+            );
+            $quantity = $product->getQuantity();
+            $product_id = $product->getId();
+            $stmt2->bindParam(':quantity', $quantity, PDO::PARAM_INT);
+            $stmt2->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+            $stmt2->execute();
+
         } catch (PDOException $e) {
             $conn->rollBack();
             print($e->errorInfo);

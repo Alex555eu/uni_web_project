@@ -5,6 +5,10 @@ require_once __DIR__."/../../autoload.php";
 
 class DefaultController extends AppController {
 
+    public function __construct() {
+        parent::__construct();
+    }
+
     public function index() {
         $this->render('index');
     }
@@ -22,7 +26,11 @@ class DefaultController extends AppController {
     public function cart() {
         $repo = new OrderRepository();
         $cart_data = $repo->getAllCartItems();
-        $this->render('cart', ['cart_data' => $cart_data]);
+        if (empty($cart_data)){
+            $this->render('cart');
+        } else {
+            $this->render('cart', ['cart_data' => $cart_data]);
+        }
     }
 
     public function login() {
@@ -64,5 +72,6 @@ class DefaultController extends AppController {
         $url = "http://" . $_SERVER['HTTP_HOST'];
         header("Location: {$url}/user");
     }
+
 
 }
