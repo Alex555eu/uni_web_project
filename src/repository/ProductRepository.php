@@ -63,6 +63,25 @@ class ProductRepository extends Repository {
         return $listOfProds;
     }
 
+    public function getProductsByName(string $product_name) {
+        $product_name = strtolower($product_name);
+        $conn = $this->database->getConnection();
+        $stmt = $conn->prepare(
+            'SELECT p.id, p.name, p.price, p.image, p.description, pca.product_category_id, pi.quantity, pi.store_id
+                    FROM public.product as p
+                    JOIN public.product_category_assignment as pca ON p.id = pca.product_id
+                    JOIN public.product_category as pc ON pca.product_category_id = pc.id
+                    JOIN public.product_inventory as pi ON p.inventory_id = pi.id
+                    JOIN public.store as s ON pi.store_id = s.id
+                    WHERE LOWER(p.name) LIKE :product_name'
+        );
+        $productNameParam = '%' . $product_name . '%';
+        $stmt->bindParam(':product_name', $productNameParam, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function getProductById(int $product_id) {
         $conn = $this->database->getConnection();
 

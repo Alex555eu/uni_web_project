@@ -1,11 +1,8 @@
 
-/********* MAIN METHOD CALLER***********/
 
-//main();
 
-/////////////////////////////////////////
 
-function myFunction() {
+function navResponse() {
     var x = document.getElementById("myNavbar");
     if (x.className === "navbar") {
       x.className += " responsive";

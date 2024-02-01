@@ -28,5 +28,7 @@ Routing::post('updateUserData', 'DefaultController');
 Routing::post('removeItemFromCart', "OrderController");
 Routing::post('placeAnOrder', 'OrderController');
 
+Routing::post('search', 'ProductController');
+
 
 Routing::run($path);

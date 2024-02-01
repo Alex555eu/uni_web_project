@@ -21,7 +21,7 @@
         </a>
     </div>
     <div class="icon">
-        <a href="javascript:void(1);" onclick="myFunction()">
+        <a href="javascript:void(1);" onclick="navResponse()">
             &#9776;
         </a>
     </div>
@@ -41,9 +41,9 @@
             }
         }
         ?>
-        <a href="/main#products-container" onclick="myFunction()">Menu</a>
-        <a href="/locales" onclick="myFunction()">Locales</a>
-        <a href="/cart" onclick="myFunction()">Cart</a>
+        <a href="/main#products-container" onclick="navResponse()">Menu</a>
+        <a href="/locales" onclick="navResponse()">Locales</a>
+        <a href="/cart" onclick="navResponse()">Cart</a>
         <?php
             $html = '<a href="';
             if(isset($user_data)) {

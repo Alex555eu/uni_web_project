@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="public/css/navbar.css">
   <link rel="stylesheet" type="text/css" href="public/css/main-page.css">
-  <script src="public/scripts/main.js"></script>
+  <script type="text/javascript" src="public/scripts/main.js" defer></script>
+  <script type="text/javascript" src="public/scripts/search_bar.js" defer></script>
+
 </head>
 
 <body>
@@ -19,7 +20,7 @@
             </a>
         </div>
         <div class="icon">
-            <a href="javascript:void(1);" onclick="myFunction()">
+            <a href="javascript:void(1);" onclick="navResponse()">
                 &#9776;
             </a>
         </div>
@@ -39,9 +40,9 @@
                 }
             }
             ?>
-            <a href="/main#products-container" onclick="myFunction()">Menu</a>
-            <a href="/locales" onclick="myFunction()">Locales</a>
-            <a href="/cart" onclick="myFunction()">Cart</a>
+            <a href="/main#products-container" onclick="navResponse()">Menu</a>
+            <a href="/locales" onclick="navResponse()">Locales</a>
+            <a href="/cart" onclick="navResponse()">Cart</a>
             <?php
             $html = '<a href="';
             if(isset($user_data)) {
@@ -66,35 +67,30 @@
 
 
 
-    <form id="store_select_form" action="/main#products-container" method="POST">
-        <select id="choose_store_id" name="selected_store" onchange="submitStoreSelectForm();">
-            <option>Choose location</option>
-            <option value="1">Krakow, ul.Warszawska</option>
-            <option value="2">Krakow, ul.Starowka</option>
-        </select>
-    </form>
-    <script>
-        function submitStoreSelectForm() {
-            document.getElementById("store_select_form").submit();
-        }
-    </script>
 
     <div class="products-container" id="products-container">
+        <div class="search-bar-container">
+            <form id="store_select_form" action="/main#products-container" method="POST">
+                <select id="choose_store_id" name="selected_store" onchange="submitStoreSelectForm();">
+                    <option>Choose location</option>
+                    <option value="1">Krakow, ul.Warszawska</option>
+                    <option value="2">Krakow, ul.Starowka</option>
+                </select>
+            </form>
+            <script>
+                function submitStoreSelectForm() {
+                    document.getElementById("store_select_form").submit();
+                }
+            </script>
+            <input id="search-bar" type="text" placeholder="Search">
+        </div>
         <?php
         require_once __DIR__.'/../../src/models/Product.php';
         require_once __DIR__.'/../../src/repository/ProductRepository.php';
 
-//        $cookie_name = "user_token";
-//        if(!isset($_COOKIE[$cookie_name])) {
-//            echo "Cookie named '" . $cookie_name . "' is not set!<br>";
-//        } else {
-//            echo "Cookie '" . $cookie_name . "' is set!<br>";
-//            echo "Value is: " . $_COOKIE[$cookie_name] . "<br>";
-//        }
 
         if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             $store_id = intval($_POST['selected_store']);
-            echo $store_id;
         } else {
             $store_id = 1;
         }
@@ -124,6 +120,19 @@
 
     </div>
 
+    <template id="product-template">
+        <div class="product_wrapper">
+            <a href="">
+                <div class="product">
+                    <div class="product_img">
+                        <img src="">
+                    </div>
+                    <h2>name</h2>
+                    <p>price</p>
+                </div>
+            </a>
+        </div>
+    </template>
 
 
 <!-- edit ends here -->
