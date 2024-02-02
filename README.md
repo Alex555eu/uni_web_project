@@ -6,6 +6,7 @@
 - Presentation
 - Requirements
 - Installation
+- User data
 - Maintainers
 
 ## Introduction
@@ -40,6 +41,15 @@ Application requirements:
 Run application using 'docker-compose up' command inside application directory, then
 visit http://localhost:8080/main or http://127.0.0.1:8080/main
 
+## User data
+
+Admin: 
+  email: admin@admin.com
+  password: admin
+
+User:
+  email: user@user.com
+  password: user
 
 ## Maintainers
 
