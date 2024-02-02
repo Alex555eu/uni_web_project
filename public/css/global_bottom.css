@@ -1,0 +1,19 @@
+
+
+.footer-content {
+    width: 100vw;
+    min-height: 10vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 0;
+
+    background-color: rgb(221, 118, 223);
+}
+
+#hello {
+    color: black;
+}
+
+

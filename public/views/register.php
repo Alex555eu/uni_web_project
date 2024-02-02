@@ -10,6 +10,11 @@
             <div>
                 <img src="public/images/logo.svg" alt="logo img">
             </div>
+            <?php
+            if (isset($messages)) {
+                echo $messages;
+            }
+            ?>
             <form action="register_secure" method="POST">
                 <div id="left">
                     <input name="name" type="text" placeholder="name">

@@ -1,5 +1,4 @@
 
-
 <?php include("global_top.php"); ?>
 <!-- edit starts here -->
 
@@ -7,12 +6,19 @@
 
 
 <div class="locales-container">
+
     <?php
-    if(isset($locales)) {
+    $html = '';
+    if (isset($locales)) {
         foreach ($locales as $local) {
-            var_dump($local);
+            $html .= '<div class="locale">';
+                $html .= '<output>' . $local->getPostalCode() . '</output>';
+                $html .= '<output>' . $local->getCity() . '</output>';
+                $html .= '<output>' . $local->getAddress() . '</output>';
+            $html .= '</div>';
         }
     }
+    echo $html;
     ?>
 </div>
 

@@ -6,6 +6,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
 
+.locale {
+    width: 50vw;
+    padding: 1em;
+    margin: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
+    border-radius: 15px;
+    background: rgba(217, 217, 217, 0.66);
+    box-shadow: 10px 10px 4px 0px rgba(0, 0, 0, 0.25);
 }

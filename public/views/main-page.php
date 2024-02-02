@@ -27,12 +27,12 @@
         <div class="options">
             <?php
             if(isset($user_data)) {
-                if ($user_data['authorization'] == 1) {
+                if ($user_data['authorization'] == 2) {
                     $html = '<a href="';
                     $html .= '/admin';
                     $html .= '" onclick="myFunction()">AdminPanel</a>';
                     echo $html;
-                } else if ($user_data['authentication'] == 0) {
+                } else if ($user_data['authentication'] == 1) {
                     $html = '<a href="';
                     $html .= '/worker';
                     $html .= '" onclick="myFunction()">WorkerPanel</a>';
@@ -107,7 +107,7 @@
                             $html .= '<img src="' . $product->getImage() . '">';
                         $html .= '</div>';
                         $html .= '<h2>' . $product->getName() . '</h2>';
-                        $html .= '<p>'. $product->getPrice() . ' pln</p>';
+                        $html .= '<p>'. $product->getPrice() . ' $</p>';
                     $html .= '</div>';
                 $html .= '</a>';
             $html .= '</div>';

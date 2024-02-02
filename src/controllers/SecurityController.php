@@ -32,7 +32,7 @@ class SecurityController extends AppController {
 
     }
 
-    public function register_secure() { //todo: add a check for existing account !!!!! also add transaction
+    public function register_secure() {
         if (!$this->isPost()) {
             return $this->render('login');
         }
@@ -47,19 +47,21 @@ class SecurityController extends AppController {
         $user = new User($email, $password, $name, $surname);
 
         $userRepository = new UserRepository();
-        $userRepository->addUser($user);
-
+        $res = $userRepository->addUser($user);
+        if (is_null($res)) {
+            $this->render('register', ['messages' => 'Account already exists']);
+        }
         $url = "http://" . $_SERVER['HTTP_HOST'];
         header("Location: {$url}/login");
     }
 
     public function validate_user_token() {
         if (isset($_COOKIE['user_token'])) {
-            $db = new Database();
+            $db = Database::getInstance();
             $conn = $db->getConnection();
             $conn->beginTransaction();
             try {
-                $stmt = $conn->prepare(
+                $stmt = $conn->prepare( // returns token_id on success or null
                     'SELECT validate_user_token(:token_id)'
                 );
                 $stmt->bindParam(':token_id', $_COOKIE['user_token'], PDO::PARAM_STR);
@@ -81,7 +83,7 @@ class SecurityController extends AppController {
     }
 
     private function create_user_token($user_id) {
-        $db = new Database();
+        $db = Database::getInstance();
         $conn = $db->getConnection();
         $conn->beginTransaction();
         try {

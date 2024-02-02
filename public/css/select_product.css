@@ -2,16 +2,102 @@
 
 .pane {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
 
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 
+    font-family: 'Knewave';
+    letter-spacing: 0.3vh;
+    font-size: 3vh;
 
 }
 
-.product_img {
+.product {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 80vw;
+    height: 40vh;
 
+    /*background-color: aqua;*/
+}
+
+
+
+#name {
+    font-size: 5vh;
+}
+
+.img_container {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+
+    border-radius: 15px;
+    background: rgba(217, 217, 217, 0.66);
+    box-shadow: 10px 10px 4px 0px rgba(0, 0, 0, 0.25);
+
+    /*background-color: aquamarine;*/
+}
+
+.img_container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#price {
+    color: rgba(221, 118, 223, 1.0);
+}
+
+.product_info {
+    width: 30%;
+    height: 100%;
+    margin-left: 1em;
+    display: flex;
+    justify-items: center;
+    float: left;
+    flex-direction: column;
+
+    /*background-color: red;*/
+
+}
+
+#description {
+    width: 30vw;
+    position: relative;
+}
+
+button {
+    margin: 2em;
+    padding: 0.5em 1em 0.5em 1em;
+
+    border: transparent;
+    background: rgb(221, 118, 223);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+
+    letter-spacing: 4px;
+
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    .img_container {
+        width: 80vw;
+    }
+    .product {
+        flex-direction: column;
+        height: auto;
+    }
+    .product_info {
+        width: 90vw;
+        margin: 0;
+        float:none;
+    }
 }

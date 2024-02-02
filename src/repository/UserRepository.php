@@ -78,19 +78,24 @@ class UserRepository extends Repository {
         return null;
     }
 
-    public function addUser($user): ?bool
-    {
+    public function addUser($user): ?bool {
         $conn = $this->database->getConnection();
-
-        $stmt = $conn->prepare(
-            'INSERT INTO public.user (email_address, password, first_name, last_name) VALUES (:email, :password, :name, :surname)'
-        );
-        $stmt->bindParam(':email', $user->getEmail(), PDO::PARAM_STR);
-        $stmt->bindParam(':password', $user->getPassword(), PDO::PARAM_STR);
-        $stmt->bindParam(':name', $user->getName(), PDO::PARAM_STR);
-        $stmt->bindParam(':surname', $user->getSurname(), PDO::PARAM_STR);
-        $stmt->execute();
-
+        $conn->beginTransaction();
+        try {
+            $stmt = $conn->prepare(
+                'INSERT INTO public.user (email_address, password, first_name, last_name) VALUES (:email, :password, :name, :surname)'
+            );
+            $stmt->bindParam(':email', $user->getEmail(), PDO::PARAM_STR);
+            $stmt->bindParam(':password', $user->getPassword(), PDO::PARAM_STR);
+            $stmt->bindParam(':name', $user->getName(), PDO::PARAM_STR);
+            $stmt->bindParam(':surname', $user->getSurname(), PDO::PARAM_STR);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            $conn->rollBack();
+            print($e->errorInfo);
+            return null;
+        }
+        $conn->commit();
         return true;
     }
 

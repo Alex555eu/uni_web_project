@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Knewave' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="public/css/navbar.css">
     <script src="public/scripts/main.js"></script>
 </head>
@@ -28,12 +29,12 @@
     <div class="options">
         <?php
         if(isset($user_data)) {
-            if ($user_data['authorization'] == 1) {
+            if ($user_data['authorization'] == 2) {
                 $html = '<a href="';
                 $html .= '/admin';
                 $html .= '" onclick="myFunction()">AdminPanel</a>';
                 echo $html;
-            } else if ($user_data['authentication'] == 0) {
+            } else if ($user_data['authentication'] == 1) {
                 $html = '<a href="';
                 $html .= '/worker';
                 $html .= '" onclick="myFunction()">WorkerPanel</a>';
