@@ -38,8 +38,8 @@ Application requirements:
 
 ## Installation 
 
-Run application using 'docker-compose up' command inside application directory, then
-visit http://localhost:8080/main or http://127.0.0.1:8080/main
+Run application using `docker-compose up` command while inside application directory, then
+visit http://localhost:8080/main or http://127.0.0.1:8080/main in your web browser.
 
 ## User data
 
