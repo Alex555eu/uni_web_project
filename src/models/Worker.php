@@ -1,6 +1,5 @@
 <?php
 
-
 class Worker extends User {
 
     private $authorization;
@@ -12,17 +11,15 @@ class Worker extends User {
         $this->store_id = $store_id;
     }
 
-    public function getAuthorization(): ?string
-    {
+    public function getAuthorization(): ?string {
         return $this->authorization;
     }
 
-    public function getStoreId(): string
-    {
+    public function getStoreId(): string {
         return $this->store_id;
     }
 
-    public function toArray() {
+    public function toArray() : array {
         $array = parent::toArray();
         $array['store_id'] = $this->getStoreId();
         $array['authorization'] = $this->getAuthorization();

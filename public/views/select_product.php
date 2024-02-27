@@ -16,14 +16,15 @@
             $html .= '<div class="product_info">';
                 $html .= '<output id="name">' . $product->getName() . '</output>';
                 $html .= '<output id="price">' . $product->getPrice() . ' $</output>';
-                $html .= '<output id="quantity">only ' . $product->getQuantity() . ' left</output>';
+                $html .= '<output id="quantity">only ' . (int)$product->getProductInventory()->getTotalQuantityInStore() . ' left at:</output>';
+                $html .= '<output>' . $product->getProductInventory()->getStore()->getAddress() . '</output>';
 
                 $html .= '<form action="addProductToCart" method="post">';
                     $html .= '<input type="hidden" name="product_id" value="' . $product->getId() . '">';
-                    $html .= '<input type="number" step="1" min="1" max="' . $product->getQuantity() . '" value="1" name="quantity">';
+                    $html .= '<input type="number" step="1" min="1" max="' . $product->getProductInventory()->getTotalQuantityInStore() . '" value="1" name="quantity">';
                     $html .= '<button type="submit">add</button>';
                 $html .= '</form>';
-                $html .= '<output id="description">' . $product->getDesc() . '</output>';
+                $html .= '<output id="description">' . $product->getDescription() . '</output>';
             $html .= '</div>';
 
             echo $html;

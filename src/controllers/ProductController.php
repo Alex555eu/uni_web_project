@@ -31,14 +31,16 @@ class ProductController extends AppController {
         $argument = intval(filter_var($argument, FILTER_SANITIZE_NUMBER_INT)); // returns 0 on failure
         if ($argument != 0) {
             $path = $this->productRepository->deleteProduct($argument);
+
             if (!is_null($path)) {
                 $old_file = dirname(__DIR__) . '/../' . $path;
                 if (file_exists($old_file))
                     unlink($old_file);
             }
         }
-        else
+        else {
             die("Wrong url!");
+        }
         $url = "http://" . $_SERVER['HTTP_HOST'];
         header("Location: {$url}/modify_product");
     }
@@ -61,7 +63,14 @@ class ProductController extends AppController {
                 dirname(__DIR__).$path
             );
 
-            $modifiedProduct = new Product($_POST['product_id'], $_POST['name'], $_POST['price'], $trimmedPath, $_POST['description'], 2, $_POST['quantity'], $_POST['store_id']);
+            //$modifiedProduct = new Product($_POST['product_id'], $_POST['name'], $_POST['price'], $trimmedPath, $_POST['description'], 2, $_POST['quantity']);
+            $modifiedProduct = $this->productRepository->getProductById($_POST['product_id']);
+            $modifiedProduct->setName($_POST['name']);
+            $modifiedProduct->setPrice($_POST['price']);
+            $modifiedProduct->setDescription($_POST['description']);
+            $modifiedProduct->setImage($trimmedPath);
+            $modifiedProduct->getProductInventory()->setTotalQuantityInStore($_POST['quantity']);
+
             $tmp = $this->productRepository->modifyProduct($modifiedProduct);
 
             if (is_null($tmp)) {
@@ -74,7 +83,13 @@ class ProductController extends AppController {
                     unlink($old_file);
             }
         } else {
-            $modifiedProduct = new Product($_POST['product_id'], $_POST['name'], $_POST['price'], $trimmedPath, $_POST['description'], 2, $_POST['quantity'], $_POST['store_id']);
+            $modifiedProduct = $this->productRepository->getProductById($_POST['product_id']);
+            $modifiedProduct->setName($_POST['name']);
+            $modifiedProduct->setPrice($_POST['price']);
+            $modifiedProduct->setDescription($_POST['description']);
+            $modifiedProduct->setImage($trimmedPath);
+            $modifiedProduct->getProductInventory()->setTotalQuantityInStore($_POST['quantity']);
+
             $this->productRepository->modifyProduct($modifiedProduct);
         }
 
@@ -93,7 +108,7 @@ class ProductController extends AppController {
             header('Content-type: application/json');
             http_response_code(200) ;
 
-            echo json_encode($this->productRepository->getProductsByName($decoded['search']));
+            echo json_encode($this->productRepository->getProducts($decoded['search_category'], $decoded['search_store'], $decoded['search']));
 
         }
     }
@@ -107,8 +122,8 @@ class ProductController extends AppController {
             $trimmedPath = substr($path, strpos($path, '/', 1));
             $trimmedPath = trim($trimmedPath, '/');
 
-            $product = new Product(-1, $_POST['name'], $_POST['price'], $trimmedPath, $_POST['description'] ,2, $_POST['quantity'], $_POST['store_id']);
-            $tmp = $this->productRepository->addNewProduct($product);
+            $product = new Product(-1, $_POST['name'], $_POST['description'], $_POST['price'], $trimmedPath, null, null);
+            $tmp = $this->productRepository->addNewProduct($product, $_POST['quantity'], $_POST['store_id'], $_POST['category_id']);
 
             if (is_null($tmp)) {
                 $this->message[] = 'failed to add new product';
@@ -121,11 +136,12 @@ class ProductController extends AppController {
                 );
             }
         }
-        return $this->render('add_product', ['messages' => $this->message]);
+        //return $this->render('add_product', ['messages' => $this->message]);
+        $url = "http://" . $_SERVER['HTTP_HOST'];
+        header("Location: {$url}/modify_product");
     }
 
-    private function validate(array $file): bool
-    {
+    private function validate(array $file): bool {
         if ($file['size'] > self::MAX_FILE_SIZE) {
             $this->message[] = 'File is too large for destination file system.';
             return false;
@@ -137,6 +153,8 @@ class ProductController extends AppController {
         }
         return true;
     }
+
+
 
 
 

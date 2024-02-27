@@ -10,39 +10,35 @@
             //$script = '<script>' . 'alert("' . $message . '") </script>';
             echo '<p style="text-align: center;">' . $message . '</p>';
         }
-        if (isset($cart_data)) {
+        if (isset($cart_items)) {
             $html = '';
-            foreach ($cart_data as $item) {
+            foreach ($cart_items as $item) {
                 $html .= '<div class="cart-items">';
                 $html .= '<div class="img-container">';
-                $html .= '<img src="' . $item->getImage() . '" alt="no image">';
+                $html .= '<img src="' . $item->getProduct()->getImage() . '" alt="no image">';
                 $html .= '</div>';
-                $html .= '<output id="name">' . $item->getName() . '</output>';
-                $html .= '<output id="price">' . $item->getPrice() . '</output>';
+                $html .= '<output id="name">' . $item->getProduct()->getName() . '</output>';
+                $html .= '<output id="price">' . $item->getProduct()->getPrice() . '</output>';
                 $html .= '<output>x</output>';
-                $html .= '<output id="amount">' . $item->getAmountInCart() . '</output>';
+                $html .= '<output id="amount">' . $item->getProductQuantity() . '</output>';
                 $html .= '<form action="removeItemFromCart" method="POST">';
-                $html .= '<input name="cart_item_id" type="hidden" value="' . $item->getCartItemId() . '">';
+                $html .= '<input name="cart_item_id" type="hidden" value="' . $item->getId() . '">';
                 $html .= '<button id="submit-btn" type="submit">X</button>';
                 $html .= '</form>';
-
                 $html .= '</div>';
             }
-
-            // Additional section for order information
-            $html .= '<div class="cart-order-info">';
-            $html .= '<textarea placeholder="Additional information for recipient"></textarea>';
-            $html .= '</div>';
 
             $html .= '<output id="total-sum"></output>';
 
             $html .= '<form action="placeAnOrder" method="POST">';
+            $html .= '<div class="cart-order-screenshots">';
+            $html .= '<textarea id="additional_info" name="additional_info" placeholder="Additional information for recipient"></textarea>';
+            $html .= '</div>';
             $html .= '<button type="submit">Place Your Order</button>';
             $html .= '</form>';
 
-
             echo $html;
-        } else {
+        } else if (!isset($message)) {
             echo 'Your cart is empty';
         }
         ?>

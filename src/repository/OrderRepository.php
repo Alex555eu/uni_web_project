@@ -4,130 +4,60 @@ require_once __DIR__.'/Repository.php';
 
 class OrderRepository extends Repository {
 
-    public function addProductToCart(int $product_id, int $quantity) {
-        $conn = $this->database->getConnection();
-        $conn->beginTransaction();
-        try {
-            $stmt = $conn->prepare(
-                'INSERT INTO public.cart_item (product_id, quantity, session_id) values (:product_id, :quantity, :session_id)'
-            );
-            $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
-            $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
-            $stmt->bindParam(':session_id', $_COOKIE['user_token'], PDO::PARAM_STR);
-            $stmt->execute();
-        } catch (PDOException $e) {
-            $conn->rollBack();
-            print_r($e->errorInfo);
-            return null;
-        }
-        $conn->commit();
-        return 0;
-    }
-
-    public function getAllCartItems() {
-        $conn = $this->database->getConnection();
-
-        $stmt = $conn->prepare(
-            'SELECT ci.id as cart_item_id, p.id as product_id, p.name, p.price, p.image, p.description, pca.product_category_id, pi.quantity as inv_quantity, pi.store_id, ci.quantity
-                    FROM public.cart_item as ci
-	                JOIN public.product as p on p.id = ci.product_id
-	                JOIN public.product_category_assignment as pca ON ci.product_id = pca.product_id
-	                JOIN public.product_inventory as pi ON p.inventory_id = pi.id
-	                where ci.session_id = :session_id'
-        );
-        $stmt->bindParam(':session_id', $_COOKIE['user_token'], PDO::PARAM_STR);
-        $stmt->execute();
-
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $cartItems = [];
-        foreach ($result as $item) {
-            $cartItems[] = new CartItem($item['cart_item_id'], $item['quantity'], $item['product_id'], $item['name'], $item['price'], $item['image'], $item['description'], $item['product_category_id'], $item['inv_quantity'], $item['store_id']);
-        }
-
-        return $cartItems;
-    }
-
-    public function removeItemFromCart(int $item_id) {
-        $conn = $this->database->getConnection();
-        $conn->beginTransaction();
-        try {
-            $stmt = $conn->prepare(
-                'DELETE FROM public.cart_item
-                    WHERE id = :cart_item_id'
-            );
-            $stmt->bindParam(':cart_item_id', $item_id, PDO::PARAM_INT);
-            $stmt->execute();
-        } catch (PDOException $e) {
-            $conn->rollBack();
-            print($e->errorInfo);
-            return null;
-        }
-        $conn->commit();
-        return 0;
-    }
-
-    public function placeAnOrder() {
-        if (isset($_COOKIE['user_token'])) {
-            $conn = $this->database->getConnection();
-            $conn->beginTransaction();
-            try {
-                $stmt = $conn->prepare(
-                    'SELECT place_new_order(:session_id)'
-                );
-                $stmt->bindParam(':session_id', $_COOKIE['user_token'], PDO::PARAM_INT);
-                $stmt->execute();
-            } catch (PDOException $e) {
-                $conn->rollBack();
-                print($e->errorInfo);
-                return null;
-            }
-            $conn->commit();
-            return 0;
-        }
-        return null;
-    }
-
     public function getOrdersHistory() {
         $conn = $this->database->getConnection();
         $conn->beginTransaction();
         try {
             $stmt = $conn->prepare(
                 'SELECT
-                            od.id,
-                            od.total,
-                            array_agg(distinct u.email_address) AS user_email,
-                            array_agg(ARRAY[p.id, oi.quantity]) AS product
-                       FROM
-                            public.order_details od
-                       JOIN
-                            public.order_item oi ON od.id = oi.details_id
-                       JOIN
-                            public.user u ON od.user_id = u.id
-                       JOIN
-	                	    public.product as p on p.id = oi.product_id
-                       GROUP BY
-                            od.id;'
+                            od.id as order_details_id,
+                            od.total as order_details_total,
+                            od.placement_date as order_placement_date,
+                            od.additional_info as order_additional_info,
+                            us.id as user_id,
+                            us."password" as user_password,
+                            us.first_name as user_first_name,
+                            us.last_name as user_last_name,
+                            us.email_address as user_email_address,
+                            oi.id as order_item_id,
+                            oi.quantity as order_item_quantity,
+                            pr.id as product_id,
+                            pr.name as product_name,
+                            pr.description as product_description,
+                            pr.price as product_price,
+                            pr.image as product_image,
+                            pi.id as product_inventory,
+                            pi.quantity as product_inventory_quantity,
+                            st.id as store_id,
+                            st.postal_code as store_postal_code,
+                            st.city as store_city,
+                            st.address as store_address
+                        FROM
+                            order_details AS od
+                            JOIN public.user AS us ON us.id = od.user_id
+                            JOIN order_item AS oi ON oi.details_id = od.ID
+                            JOIN product as pr ON pr.id = oi.product_id
+                            JOIN product_inventory as pi on pi.id = pr.inventory_id
+                            JOIN store as st on st.id = pi.store_id
+                        ORDER BY
+	                        od.id;'
             );
             $stmt->execute();
 
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             $orders = array();
-            $repo = new ProductRepository();
-
             foreach ($result as $res) {
-                $tmp = $res['product'];
-                $jsonString = str_replace(['{', '}'], ['[', ']'], $tmp);
-                $jsonDec = json_decode($jsonString, true);
-                $products = array();
-
-                foreach ($jsonDec as $product) {
-                $prod = $repo->getProductById($product[0]);
-                $prod->setQuantity($product[1]);
-                $products[] = $prod;
+                $currOrder = end($orders);
+                if ($currOrder == null || $currOrder->getId() != $res['order_details_id']) {
+                    $currOrder = new Order($res['order_details_id'], [], $res['order_details_total'], $res['order_placement_date'], $res['order_additional_info'], new User($res['user_email_address'], $res['user_password'], $res['user_first_name'], $res['user_last_name'], $res['user_id']));
+                    $orders[] = $currOrder;
                 }
-                $orders[] = new Order($res['id'], $products, $res['total'], $res['user_email']);
+                $store = new Store($res['id'], $res['postal_code'], $res['city'], $res['address']);
+                $productInventory = new ProductInventory($res['product_inventory_id'], $res['product_inventory_quantity'], $store);
+                $product = new Product($res['product_id'], $res['product_name'], $res['product_description'], $res['product_price'], $res['product_image'], null, $productInventory);
+                $productItem = new ProductItem($res['order_item_id'], $res['order_item_quantity'], $product);
+                $currOrder->addProductItem($productItem);
             }
 
 
@@ -138,6 +68,30 @@ class OrderRepository extends Repository {
         }
         $conn->commit();
         return $orders;
+    }
+
+    public function placeAnOrder(): ?int {
+        if (isset($_COOKIE['user_token'])) {
+            $conn = $this->database->getConnection();
+            $conn->beginTransaction();
+            try {
+                $stmt = $conn->prepare(
+                    'SELECT place_new_order(:session_id, :additional_info)'
+                );
+                $stmt->bindParam(':session_id', $_COOKIE['user_token'], PDO::PARAM_INT);
+                $stmt->bindParam(':additional_info', $_POST['additional_info'], PDO::PARAM_STR);
+                $stmt->execute();
+            } catch (PDOException $e) {
+                $conn->rollBack();
+                $tmpRepo = new CartRepository();
+                $tmpRepo->reloadCart();
+                //print($e->errorInfo);
+                return null;
+            }
+            $conn->commit();
+            return 0;
+        }
+        return null;
     }
 
 }

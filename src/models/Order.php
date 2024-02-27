@@ -5,63 +5,70 @@
 class Order {
 
     private $id;
-    private $products;
+    private $productItems;
     private $total;
-    private $user_email;
+    private $placementDate;
+    private $additionalInfo;
+    private $user;
 
-
-    public function __construct($order_id, array $products, $total, $user_email) {
-        $this->id = $order_id;
-        $this->products = $products;
+    public function __construct($id, $productItems, $total, $placementDate, $additionalInfo, $user) {
+        $this->id = $id;
+        $this->productItems = $productItems;
         $this->total = $total;
-        $this->user_email = $user_email;
+        $this->placementDate = $placementDate;
+        $this->additionalInfo = $additionalInfo;
+        $this->user = $user;
     }
 
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
-    public function setId($id): void
-    {
+    public function setId($id): void {
         $this->id = $id;
     }
 
-    public function getProducts(): array
-    {
-        return $this->products;
+    public function addProductItem($productItem) {
+        $this->productItems[] = $productItem;
     }
 
-    public function setProducts(array $products): void
-    {
-        $this->products = $products;
+    public function getProductItems() {
+        return $this->productItems;
     }
 
-    public function addProduct(Product $product) {
-        $this->products[] = $product;
+    public function setProductItems($productItems): void {
+        $this->productItems = $productItems;
     }
 
-    public function getTotal()
-    {
+    public function getTotal() {
         return $this->total;
     }
 
-    public function setTotal($total): void
-    {
+    public function setTotal($total): void {
         $this->total = $total;
     }
 
-    public function getUserEmail()
-    {
-        return $this->user_email;
+    public function getUser() {
+        return $this->user;
     }
 
-    public function setUserEmail($user_email): void
-    {
-        $this->user_email = $user_email;
+    public function setUser($user): void {
+        $this->user = $user;
+    }
+    public function getPlacementDate() {
+        return $this->placementDate;
+    }
+    public function setPlacementDate($placementDate): void {
+        $this->placementDate = $placementDate;
     }
 
+    public function getAdditionalInfo() {
+        return $this->additionalInfo;
+    }
 
+    public function setAdditionalInfo($additionalInfo): void {
+        $this->additionalInfo = $additionalInfo;
+    }
 
 
 }

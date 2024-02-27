@@ -94,9 +94,10 @@ html {
 }
 
 .search-bar-container select {
-    width: 80%;
+    width: 10%;
     height: 100%;
 
+    margin: 0 1em 0 1em;
 
     color: #000000;
     font-size: large;
@@ -126,7 +127,7 @@ html {
     box-shadow: 10px 10px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-.search-bar-container input:focus {
+.search-bar-container >* {
     outline: none;
 }
 

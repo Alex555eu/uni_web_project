@@ -15,31 +15,35 @@
             foreach ($orders as $order) {
                 $html .= '<div class="order">';
                 $html .= '<output>Order no. ' . $order->getId() . '</output>';
-                $html .= '<output>User email: ' . $order->getUserEmail() . '</output>';
+                $html .= '<output>User email: ' . $order->getUser()->getEmail() . '</output>';
 
-                if (!is_null($order->getProducts()) && is_array($order->getProducts())) {
-                    foreach ($order->getProducts() as $item) {
+                try {
+                    $date = new DateTime($order->getPlacementDate());
+                } catch (Exception $e) {}
+                $formattedDate = $date->format('Y-m-d H:i:d');
+                $html .= '<output>Order placement date: ' . $formattedDate . '</output>';
+
+                foreach ($order->getProductItems() as $productItem) {
+                    $product = $productItem->getProduct();
                         $html .= '<div class="item">';
                         $html .= '<div class="img-container">';
-                        $html .= '<img src="' . $item->getImage() . '" alt="Product Image">';
+                        $html .= '<img src="' . $product->getImage() . '" alt="Product Image">';
                         $html .= '</div>';
-                        $html .= '<output>' . $item->getName() . '</output>';
-                        if (isset($locations) && is_array($locations)) {
-                            foreach ($locations as $location) {
-                                if ($location->getId() == $item->getStoreId()) {
-                                    $html .= '<output>';
-                                    $html .= $location->getPostalCode() . ' ' . $location->getCity() . ', ' . $location->getAddress();
-                                    $html .= '</output>';
-                                }
-                            }
-                        }
-                        $html .= '<output>' . $item->getQuantity() . 'pcs.</output>';
+                        $html .= '<output>' . $product->getName() . '</output>';
+                        $html .= '<output>';
+                        $html .= $product->getProductInventory()->getStore()->getPostalCode() . ' '
+                               . $product->getProductInventory()->getStore()->getCity() . ', '
+                               . $product->getProductInventory()->getStore()->getAddress();
+                        $html .= '</output>';
+                        $html .= '<output>' . $productItem->getProductQuantity() . 'pcs.</output>';
                         $html .= '<output>x</output>';
-                        $html .= '<output>' . $item->getPrice() . ' $</output>';
+                        $html .= '<output>' . $product->getPrice() . ' $</output>';
                         $html .= '</div>';
-                    }
-                }
 
+                }
+                if (!empty($order->getAdditionalInfo())) {
+                    $html .= '<output> Additional info from customer:</br></br>' . $order->getAdditionalInfo() . '</output></br>';
+                }
                 $html .= '<output>Total: ' . $order->getTotal() . ' $</output>';
                 $html .= '</div>';
             }

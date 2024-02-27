@@ -2,7 +2,7 @@
 
 require_once __DIR__.'/Repository.php';
 
-class LocationRepository extends Repository {
+class StoreRepository extends Repository {
 
     public function getAllLocations(): ?array {
         $conn = $this->database->getConnection();
@@ -20,13 +20,13 @@ class LocationRepository extends Repository {
 
         $listOfLocations = array();
         foreach ($location as $el) {
-            $listOfLocations[] = new Location($el['id'], $el['postal_code'], $el['city'], $el['address']);
+            $listOfLocations[] = new Store($el['id'], $el['postal_code'], $el['city'], $el['address']);
         }
 
         return $listOfLocations;
     }
 
-    public function getLocationById($location_id): ?Location {
+    public function getLocationById($location_id): ?Store {
         $conn = $this->database->getConnection();
 
         $stmt = $conn->prepare(
@@ -45,7 +45,7 @@ class LocationRepository extends Repository {
             return null;
         }
 
-        return new Location($location['id'], $location['postal_code'], $location['city'], $location['address']);
+        return new Store($location['id'], $location['postal_code'], $location['city'], $location['address']);
     }
 
 

@@ -12,7 +12,7 @@
  Target Server Version : 160001 (160001)
  File Encoding         : 65001
 
- Date: 02/02/2024 13:26:38
+ Date: 27/02/2024 13:45:52
 */
 
 
@@ -116,20 +116,21 @@ DROP TABLE IF EXISTS "public"."order_details";
 CREATE TABLE "public"."order_details" (
   "id" int4 NOT NULL DEFAULT nextval('order_details_id_seq'::regclass),
   "total" numeric(10,2) NOT NULL,
-  "user_id" uuid NOT NULL
+  "user_id" uuid NOT NULL,
+  "placement_date" timestamptz(6) NOT NULL DEFAULT now(),
+  "additional_info" text COLLATE "pg_catalog"."default"
 )
 ;
 
 -- ----------------------------
 -- Records of order_details
 -- ----------------------------
-INSERT INTO "public"."order_details" VALUES (20, 17.97, '4f8626f4-75bd-4606-90c8-123657aa31ff');
-INSERT INTO "public"."order_details" VALUES (21, 5.99, '4f8626f4-75bd-4606-90c8-123657aa31ff');
-INSERT INTO "public"."order_details" VALUES (22, 6.99, '4f8626f4-75bd-4606-90c8-123657aa31ff');
-INSERT INTO "public"."order_details" VALUES (23, 69.90, '4f8626f4-75bd-4606-90c8-123657aa31ff');
-INSERT INTO "public"."order_details" VALUES (24, 5.99, '4f8626f4-75bd-4606-90c8-123657aa31ff');
-INSERT INTO "public"."order_details" VALUES (25, 5.99, 'da807565-23c2-434e-afea-7bbe4bccdd01');
-INSERT INTO "public"."order_details" VALUES (26, 35.94, 'da807565-23c2-434e-afea-7bbe4bccdd01');
+INSERT INTO "public"."order_details" VALUES (47, 5.99, '4f8626f4-75bd-4606-90c8-123657aa31ff', '2024-02-27 10:22:02.543075+00', NULL);
+INSERT INTO "public"."order_details" VALUES (48, 71.88, 'da807565-23c2-434e-afea-7bbe4bccdd01', '2024-02-27 10:22:34.255194+00', NULL);
+INSERT INTO "public"."order_details" VALUES (49, 5.99, '4f8626f4-75bd-4606-90c8-123657aa31ff', '2024-02-27 11:00:14.955802+00', NULL);
+INSERT INTO "public"."order_details" VALUES (50, 5.99, '4f8626f4-75bd-4606-90c8-123657aa31ff', '2024-02-27 11:02:46.461699+00', NULL);
+INSERT INTO "public"."order_details" VALUES (52, 5.99, '4f8626f4-75bd-4606-90c8-123657aa31ff', '2024-02-27 11:15:46.580883+00', 'draw smiley face on a box pls');
+INSERT INTO "public"."order_details" VALUES (53, 89.90, '4f8626f4-75bd-4606-90c8-123657aa31ff', '2024-02-27 12:11:07.527476+00', 'put numbers on cups');
 
 -- ----------------------------
 -- Table structure for order_item
@@ -146,14 +147,14 @@ CREATE TABLE "public"."order_item" (
 -- ----------------------------
 -- Records of order_item
 -- ----------------------------
-INSERT INTO "public"."order_item" VALUES (15, 20, 2, 1);
-INSERT INTO "public"."order_item" VALUES (16, 20, 5, 2);
-INSERT INTO "public"."order_item" VALUES (17, 21, 7, 1);
-INSERT INTO "public"."order_item" VALUES (18, 22, 16, 1);
-INSERT INTO "public"."order_item" VALUES (19, 23, 16, 10);
-INSERT INTO "public"."order_item" VALUES (20, 24, 5, 1);
-INSERT INTO "public"."order_item" VALUES (21, 25, 15, 1);
-INSERT INTO "public"."order_item" VALUES (22, 26, 5, 6);
+INSERT INTO "public"."order_item" VALUES (39, 47, 8, 1);
+INSERT INTO "public"."order_item" VALUES (40, 48, 13, 5);
+INSERT INTO "public"."order_item" VALUES (41, 48, 7, 4);
+INSERT INTO "public"."order_item" VALUES (42, 48, 9, 3);
+INSERT INTO "public"."order_item" VALUES (43, 49, 14, 1);
+INSERT INTO "public"."order_item" VALUES (44, 50, 2, 1);
+INSERT INTO "public"."order_item" VALUES (46, 52, 15, 1);
+INSERT INTO "public"."order_item" VALUES (47, 53, 73, 10);
 
 -- ----------------------------
 -- Table structure for product
@@ -165,24 +166,28 @@ CREATE TABLE "public"."product" (
   "description" varchar(255) COLLATE "pg_catalog"."default",
   "inventory_id" int4 NOT NULL,
   "price" numeric(10,2) NOT NULL,
-  "image" varchar(255) COLLATE "pg_catalog"."default" NOT NULL
+  "image" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+  "disabled" bit(1) DEFAULT '0'::"bit"
 )
 ;
 COMMENT ON COLUMN "public"."product"."image" IS 'Path to image on server';
+COMMENT ON COLUMN "public"."product"."disabled" IS 'disabled products are the ones that were deleted, but used before (i.e. placed order)';
 
 -- ----------------------------
 -- Records of product
 -- ----------------------------
-INSERT INTO "public"."product" VALUES (9, 'life on mars', 'prod', 2, 5.99, 'public/images/product_images/Love_At_First_Bite.jpg');
-INSERT INTO "public"."product" VALUES (2, 'doh nut', 'Dipped in pink glaze and topped with rainbow sprinkles!', 3, 5.99, 'public/images/product_images/D_Oh_Nut_1024x1024.jpg');
-INSERT INTO "public"."product" VALUES (7, 'david hasselhoff', 'prod', 5, 5.99, 'public/images/product_images/David_Hasselhoff_1024x1024.jpg');
-INSERT INTO "public"."product" VALUES (13, 'love at first bite', 'prod', 7, 5.99, 'public/images/product_images/Love_At_First_Bite.jpg');
-INSERT INTO "public"."product" VALUES (8, 'ice bae', 'prod', 8, 5.99, 'public/images/product_images/Ice_Ice_Bae_Bae_1024x1024.jpg');
-INSERT INTO "public"."product" VALUES (15, 'bruno mars', 'prod', 9, 5.99, 'public/images/product_images/Bruno_Mars.1_1024x1024.webp');
-INSERT INTO "public"."product" VALUES (14, 'original', 'prod', 10, 5.99, 'public/images/product_images/OG_3744b222-303b-4c00-b485-385b00e2117c_1024x1024.jpg');
-INSERT INTO "public"."product" VALUES (10, 'I make honey moves', 'prod', 11, 5.99, 'public/images/product_images/I_Make_Honey_Moves_8a8ab8e2-2225-47da-bf6b-012f45a1ffe2_1024x1024.jpg');
-INSERT INTO "public"."product" VALUES (16, 'TEST', 'test', 12, 6.99, 'public/images/product_images/I_Make_Honey_Moves_8a8ab8e2-2225-47da-bf6b-012f45a1ffe2_1024x1024.jpg');
-INSERT INTO "public"."product" VALUES (5, 'sia later', 'new description is added', 4, 5.99, 'public/images/product_images/Sia_Later_1024x1024.webp');
+INSERT INTO "public"."product" VALUES (8, 'ice bae', 'That’s just the way the cookie crumbles! Indulge your sweet tooth with vanilla icing, Oreo crumbles, and hot fudge drizzle.', 8, 5.99, 'public/images/product_images/Ice_Ice_Bae_Bae_1024x1024.jpg', '0');
+INSERT INTO "public"."product" VALUES (9, 'life on mars', 'What could be better than chocolate, chocolate and more chocolate! It''s a chocolate lover''s dream!', 2, 5.99, 'public/images/product_images/Life_On_Mars_be8b214c-2817-4e11-a8c2-a2b149cd1872_1024x1024.webp', '0');
+INSERT INTO "public"."product" VALUES (10, 'I make honey moves', 'Treat yourself to this donut with peanut butter icing and chocolate drizzle. These two crowd-pleasing flavors combine to make the donut dream team!', 11, 5.99, 'public/images/product_images/I_Make_Honey_Moves_8a8ab8e2-2225-47da-bf6b-012f45a1ffe2_1024x1024.jpg', '0');
+INSERT INTO "public"."product" VALUES (75, 'pina colada', 'Fresh, fruity flavors top this drink featuring pineapple and shredded coconut.', 84, 8.99, 'public/images/product_images/pinacolada.jpg', '0');
+INSERT INTO "public"."product" VALUES (7, 'david hasselhoff', 'It''s like donuts at the campfire! Enjoy chocolate icing with graham cracker crumbs', 5, 5.99, 'public/images/product_images/David_Hasselhoff_1024x1024.jpg', '0');
+INSERT INTO "public"."product" VALUES (14, 'original', 'Simple elegance and a big flavor to match', 10, 5.99, 'public/images/product_images/OG_3744b222-303b-4c00-b485-385b00e2117c_1024x1024.jpg', '0');
+INSERT INTO "public"."product" VALUES (5, 'sia later', 'A tantalizing treat that''ll make you say, "See ya!" to your diet with each irresistible bite!', 4, 5.99, 'public/images/product_images/Sia_Later_1024x1024.webp', '0');
+INSERT INTO "public"."product" VALUES (15, 'bruno mars', 'Tasty treats that''ll have you dancing in delight with each chocolaty bite!', 9, 5.99, 'public/images/product_images/Bruno_Mars.1_1024x1024.webp', '0');
+INSERT INTO "public"."product" VALUES (13, 'love at first bite', 'Get ready for ''Love at First Bite'' with our delectable treats – guaranteed to make your taste buds swoon!', 7, 5.99, 'public/images/product_images/Love_At_First_Bite.jpg', '0');
+INSERT INTO "public"."product" VALUES (74, 'icy latte', 'A refreshing sip that''ll chill your senses and awaken your day with a frosty embrace!', 83, 8.99, 'public/images/product_images/icelatte.jpg', '0');
+INSERT INTO "public"."product" VALUES (73, 'caramel shake', 'Caramel milk shake, made with caramel and milk', 82, 8.99, 'public/images/product_images/caramelmilkshake.jpg', '0');
+INSERT INTO "public"."product" VALUES (2, 'doh nut', 'Dipped in pink glaze and topped with rainbow sprinkles!', 3, 5.99, 'public/images/product_images/D_Oh_Nut_1024x1024.jpg', '0');
 
 -- ----------------------------
 -- Table structure for product_category
@@ -191,7 +196,7 @@ DROP TABLE IF EXISTS "public"."product_category";
 CREATE TABLE "public"."product_category" (
   "id" int4 NOT NULL DEFAULT nextval('product_category_id_seq'::regclass),
   "name" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "desc" text COLLATE "pg_catalog"."default"
+  "description" text COLLATE "pg_catalog"."default"
 )
 ;
 
@@ -223,7 +228,9 @@ INSERT INTO "public"."product_category_assignment" VALUES (10, 2);
 INSERT INTO "public"."product_category_assignment" VALUES (13, 2);
 INSERT INTO "public"."product_category_assignment" VALUES (14, 2);
 INSERT INTO "public"."product_category_assignment" VALUES (15, 2);
-INSERT INTO "public"."product_category_assignment" VALUES (16, 2);
+INSERT INTO "public"."product_category_assignment" VALUES (73, 3);
+INSERT INTO "public"."product_category_assignment" VALUES (74, 3);
+INSERT INTO "public"."product_category_assignment" VALUES (75, 3);
 
 -- ----------------------------
 -- Table structure for product_inventory
@@ -239,16 +246,18 @@ CREATE TABLE "public"."product_inventory" (
 -- ----------------------------
 -- Records of product_inventory
 -- ----------------------------
-INSERT INTO "public"."product_inventory" VALUES (2, 10.00, 1);
-INSERT INTO "public"."product_inventory" VALUES (8, 10.00, 1);
-INSERT INTO "public"."product_inventory" VALUES (10, 10.00, 1);
 INSERT INTO "public"."product_inventory" VALUES (11, 10.00, 1);
-INSERT INTO "public"."product_inventory" VALUES (7, 9.00, 1);
-INSERT INTO "public"."product_inventory" VALUES (3, 9.00, 1);
-INSERT INTO "public"."product_inventory" VALUES (5, 9.00, 1);
-INSERT INTO "public"."product_inventory" VALUES (12, 11.00, 2);
-INSERT INTO "public"."product_inventory" VALUES (9, 9.00, 1);
-INSERT INTO "public"."product_inventory" VALUES (4, 1.00, 1);
+INSERT INTO "public"."product_inventory" VALUES (83, 10.00, 1);
+INSERT INTO "public"."product_inventory" VALUES (8, 10.00, 1);
+INSERT INTO "public"."product_inventory" VALUES (7, 10.00, 1);
+INSERT INTO "public"."product_inventory" VALUES (10, 10.00, 1);
+INSERT INTO "public"."product_inventory" VALUES (3, 10.00, 1);
+INSERT INTO "public"."product_inventory" VALUES (4, 10.00, 1);
+INSERT INTO "public"."product_inventory" VALUES (9, 10.00, 1);
+INSERT INTO "public"."product_inventory" VALUES (84, 5.00, 2);
+INSERT INTO "public"."product_inventory" VALUES (5, 5.00, 2);
+INSERT INTO "public"."product_inventory" VALUES (2, 5.00, 2);
+INSERT INTO "public"."product_inventory" VALUES (82, 0.00, 1);
 
 -- ----------------------------
 -- Table structure for shopping_session
@@ -264,7 +273,6 @@ CREATE TABLE "public"."shopping_session" (
 -- ----------------------------
 -- Records of shopping_session
 -- ----------------------------
-INSERT INTO "public"."shopping_session" VALUES ('34f3b995-d98d-4e58-9044-afeb31ad34ff', '4f8626f4-75bd-4606-90c8-123657aa31ff', '2024-02-02 12:25:40.31122+00');
 
 -- ----------------------------
 -- Table structure for store
@@ -300,8 +308,8 @@ CREATE TABLE "public"."user" (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO "public"."user" VALUES ('da807565-23c2-434e-afea-7bbe4bccdd01', '$2y$12$sB0IDLyAKhGBdYqoTmIkFeWbMQz..JQ0lbm2eRk5MKxIjF4wX2ai2', 'user', 'user', 'user@user.com');
 INSERT INTO "public"."user" VALUES ('4f8626f4-75bd-4606-90c8-123657aa31ff', '$2y$12$0LSWQn5f4F.gjI/ZX9uFBOUCtTiSgEd6WcRQqs5D9.DkDg6oOW9V2', 'admin', 'admin', 'admin@admin.com');
+INSERT INTO "public"."user" VALUES ('da807565-23c2-434e-afea-7bbe4bccdd01', '$2y$12$sB0IDLyAKhGBdYqoTmIkFeWbMQz..JQ0lbm2eRk5MKxIjF4wX2ai2', 'user', 'user', 'user@user.com');
 
 -- ----------------------------
 -- Table structure for worker
@@ -314,7 +322,7 @@ CREATE TABLE "public"."worker" (
   "authorization_level" int4 NOT NULL
 )
 ;
-COMMENT ON COLUMN "public"."worker"."authorization_level" IS '0 - worker ; 1 - owner';
+COMMENT ON COLUMN "public"."worker"."authorization_level" IS '1 - worker ; 2 - owner';
 
 -- ----------------------------
 -- Records of worker
@@ -355,10 +363,49 @@ END$BODY$
   COST 100;
 
 -- ----------------------------
+-- Function structure for add_product_to_cart
+-- ----------------------------
+DROP FUNCTION IF EXISTS "public"."add_product_to_cart"("arg_product_id" int4, "arg_quantity" int4, "arg_session_id" uuid);
+CREATE OR REPLACE FUNCTION "public"."add_product_to_cart"("arg_product_id" int4, "arg_quantity" int4, "arg_session_id" uuid)
+  RETURNS "pg_catalog"."void" AS $BODY$
+	
+	DECLARE 
+		tmp_id int;
+		tmp_quantity int;
+		max_product_quantity int;
+	
+	BEGIN
+	
+	select quantity into max_product_quantity from product_inventory where id = (select inventory_id from product where id = arg_product_id);
+	
+	if arg_quantity > max_product_quantity THEN
+		arg_quantity = max_product_quantity;
+	end if;
+	
+	select id, quantity into tmp_id, tmp_quantity from public.cart_item where cart_item.session_id = arg_session_id and cart_item.product_id = arg_product_id;
+	
+	IF tmp_id is null THEN
+		INSERT INTO public.cart_item (product_id, quantity, session_id) values (arg_product_id, arg_quantity, arg_session_id);
+		RETURN;
+	END IF;
+	
+	if (tmp_quantity + arg_quantity) > max_product_quantity THEN
+		update public.cart_item set quantity = max_product_quantity where id = tmp_id;
+		RETURN;
+	END IF;
+	
+	update public.cart_item set quantity = quantity + arg_quantity where id = tmp_id;
+	
+	RETURN;
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+-- ----------------------------
 -- Function structure for armor
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."armor"(bytea, _text, _text);
-CREATE OR REPLACE FUNCTION "public"."armor"(bytea, _text, _text)
+DROP FUNCTION IF EXISTS "public"."armor"(bytea);
+CREATE OR REPLACE FUNCTION "public"."armor"(bytea)
   RETURNS "pg_catalog"."text" AS '$libdir/pgcrypto', 'pg_armor'
   LANGUAGE c IMMUTABLE STRICT
   COST 1;
@@ -366,8 +413,8 @@ CREATE OR REPLACE FUNCTION "public"."armor"(bytea, _text, _text)
 -- ----------------------------
 -- Function structure for armor
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."armor"(bytea);
-CREATE OR REPLACE FUNCTION "public"."armor"(bytea)
+DROP FUNCTION IF EXISTS "public"."armor"(bytea, _text, _text);
+CREATE OR REPLACE FUNCTION "public"."armor"(bytea, _text, _text)
   RETURNS "pg_catalog"."text" AS '$libdir/pgcrypto', 'pg_armor'
   LANGUAGE c IMMUTABLE STRICT
   COST 1;
@@ -434,10 +481,44 @@ CREATE OR REPLACE FUNCTION "public"."decrypt_iv"(bytea, bytea, bytea, text)
   COST 1;
 
 -- ----------------------------
+-- Function structure for delete_or_disable_product
+-- ----------------------------
+DROP FUNCTION IF EXISTS "public"."delete_or_disable_product"("arg_product_id" int4);
+CREATE OR REPLACE FUNCTION "public"."delete_or_disable_product"("arg_product_id" int4)
+  RETURNS "pg_catalog"."varchar" AS $BODY$
+DECLARE
+    tmp INT;
+    deleted_image_path VARCHAR;
+BEGIN
+    SELECT od.id INTO tmp 
+    FROM order_details AS od
+    JOIN order_item AS oi ON oi.details_id = od.ID 
+    WHERE oi.product_id = arg_product_id;
+
+    IF tmp IS NOT NULL THEN
+        UPDATE product 
+        SET disabled = '1' 
+        WHERE ID = arg_product_id;
+        RETURN NULL; -- Return NULL if tmp is not null
+    END IF;
+    
+    DELETE FROM PUBLIC.product_inventory USING PUBLIC.product AS P 
+    WHERE PUBLIC.product_inventory.ID = P.inventory_id 
+    AND P.ID = arg_product_id 
+    RETURNING P.image INTO deleted_image_path;
+
+    -- Return the deleted image path
+    RETURN deleted_image_path;
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+-- ----------------------------
 -- Function structure for digest
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."digest"(text, text);
-CREATE OR REPLACE FUNCTION "public"."digest"(text, text)
+DROP FUNCTION IF EXISTS "public"."digest"(bytea, text);
+CREATE OR REPLACE FUNCTION "public"."digest"(bytea, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pg_digest'
   LANGUAGE c IMMUTABLE STRICT
   COST 1;
@@ -445,8 +526,8 @@ CREATE OR REPLACE FUNCTION "public"."digest"(text, text)
 -- ----------------------------
 -- Function structure for digest
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."digest"(bytea, text);
-CREATE OR REPLACE FUNCTION "public"."digest"(bytea, text)
+DROP FUNCTION IF EXISTS "public"."digest"(text, text);
+CREATE OR REPLACE FUNCTION "public"."digest"(text, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pg_digest'
   LANGUAGE c IMMUTABLE STRICT
   COST 1;
@@ -552,8 +633,8 @@ CREATE OR REPLACE FUNCTION "public"."gen_salt"(text, int4)
 -- ----------------------------
 -- Function structure for hmac
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."hmac"(bytea, bytea, text);
-CREATE OR REPLACE FUNCTION "public"."hmac"(bytea, bytea, text)
+DROP FUNCTION IF EXISTS "public"."hmac"(text, text, text);
+CREATE OR REPLACE FUNCTION "public"."hmac"(text, text, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pg_hmac'
   LANGUAGE c IMMUTABLE STRICT
   COST 1;
@@ -561,8 +642,8 @@ CREATE OR REPLACE FUNCTION "public"."hmac"(bytea, bytea, text)
 -- ----------------------------
 -- Function structure for hmac
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."hmac"(text, text, text);
-CREATE OR REPLACE FUNCTION "public"."hmac"(text, text, text)
+DROP FUNCTION IF EXISTS "public"."hmac"(bytea, bytea, text);
+CREATE OR REPLACE FUNCTION "public"."hmac"(bytea, bytea, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pg_hmac'
   LANGUAGE c IMMUTABLE STRICT
   COST 1;
@@ -589,8 +670,8 @@ CREATE OR REPLACE FUNCTION "public"."pgp_key_id"(bytea)
 -- ----------------------------
 -- Function structure for pgp_pub_decrypt
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt"(bytea, bytea, text, text);
-CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt"(bytea, bytea, text, text)
+DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt"(bytea, bytea);
+CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt"(bytea, bytea)
   RETURNS "pg_catalog"."text" AS '$libdir/pgcrypto', 'pgp_pub_decrypt_text'
   LANGUAGE c IMMUTABLE STRICT
   COST 1;
@@ -598,8 +679,8 @@ CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt"(bytea, bytea, text, text)
 -- ----------------------------
 -- Function structure for pgp_pub_decrypt
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt"(bytea, bytea);
-CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt"(bytea, bytea)
+DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt"(bytea, bytea, text, text);
+CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt"(bytea, bytea, text, text)
   RETURNS "pg_catalog"."text" AS '$libdir/pgcrypto', 'pgp_pub_decrypt_text'
   LANGUAGE c IMMUTABLE STRICT
   COST 1;
@@ -616,8 +697,8 @@ CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt"(bytea, bytea, text)
 -- ----------------------------
 -- Function structure for pgp_pub_decrypt_bytea
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt_bytea"(bytea, bytea);
-CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt_bytea"(bytea, bytea)
+DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt_bytea"(bytea, bytea, text, text);
+CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt_bytea"(bytea, bytea, text, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_pub_decrypt_bytea'
   LANGUAGE c IMMUTABLE STRICT
   COST 1;
@@ -625,8 +706,8 @@ CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt_bytea"(bytea, bytea)
 -- ----------------------------
 -- Function structure for pgp_pub_decrypt_bytea
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt_bytea"(bytea, bytea, text, text);
-CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt_bytea"(bytea, bytea, text, text)
+DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt_bytea"(bytea, bytea);
+CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt_bytea"(bytea, bytea)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_pub_decrypt_bytea'
   LANGUAGE c IMMUTABLE STRICT
   COST 1;
@@ -661,8 +742,8 @@ CREATE OR REPLACE FUNCTION "public"."pgp_pub_encrypt"(text, bytea, text)
 -- ----------------------------
 -- Function structure for pgp_pub_encrypt_bytea
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_pub_encrypt_bytea"(bytea, bytea, text);
-CREATE OR REPLACE FUNCTION "public"."pgp_pub_encrypt_bytea"(bytea, bytea, text)
+DROP FUNCTION IF EXISTS "public"."pgp_pub_encrypt_bytea"(bytea, bytea);
+CREATE OR REPLACE FUNCTION "public"."pgp_pub_encrypt_bytea"(bytea, bytea)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_pub_encrypt_bytea'
   LANGUAGE c VOLATILE STRICT
   COST 1;
@@ -670,8 +751,8 @@ CREATE OR REPLACE FUNCTION "public"."pgp_pub_encrypt_bytea"(bytea, bytea, text)
 -- ----------------------------
 -- Function structure for pgp_pub_encrypt_bytea
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_pub_encrypt_bytea"(bytea, bytea);
-CREATE OR REPLACE FUNCTION "public"."pgp_pub_encrypt_bytea"(bytea, bytea)
+DROP FUNCTION IF EXISTS "public"."pgp_pub_encrypt_bytea"(bytea, bytea, text);
+CREATE OR REPLACE FUNCTION "public"."pgp_pub_encrypt_bytea"(bytea, bytea, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_pub_encrypt_bytea'
   LANGUAGE c VOLATILE STRICT
   COST 1;
@@ -715,15 +796,6 @@ CREATE OR REPLACE FUNCTION "public"."pgp_sym_decrypt_bytea"(bytea, text, text)
 -- ----------------------------
 -- Function structure for pgp_sym_encrypt
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_sym_encrypt"(text, text);
-CREATE OR REPLACE FUNCTION "public"."pgp_sym_encrypt"(text, text)
-  RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_sym_encrypt_text'
-  LANGUAGE c VOLATILE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for pgp_sym_encrypt
--- ----------------------------
 DROP FUNCTION IF EXISTS "public"."pgp_sym_encrypt"(text, text, text);
 CREATE OR REPLACE FUNCTION "public"."pgp_sym_encrypt"(text, text, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_sym_encrypt_text'
@@ -731,11 +803,11 @@ CREATE OR REPLACE FUNCTION "public"."pgp_sym_encrypt"(text, text, text)
   COST 1;
 
 -- ----------------------------
--- Function structure for pgp_sym_encrypt_bytea
+-- Function structure for pgp_sym_encrypt
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_sym_encrypt_bytea"(bytea, text, text);
-CREATE OR REPLACE FUNCTION "public"."pgp_sym_encrypt_bytea"(bytea, text, text)
-  RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_sym_encrypt_bytea'
+DROP FUNCTION IF EXISTS "public"."pgp_sym_encrypt"(text, text);
+CREATE OR REPLACE FUNCTION "public"."pgp_sym_encrypt"(text, text)
+  RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_sym_encrypt_text'
   LANGUAGE c VOLATILE STRICT
   COST 1;
 
@@ -749,27 +821,38 @@ CREATE OR REPLACE FUNCTION "public"."pgp_sym_encrypt_bytea"(bytea, text)
   COST 1;
 
 -- ----------------------------
+-- Function structure for pgp_sym_encrypt_bytea
+-- ----------------------------
+DROP FUNCTION IF EXISTS "public"."pgp_sym_encrypt_bytea"(bytea, text, text);
+CREATE OR REPLACE FUNCTION "public"."pgp_sym_encrypt_bytea"(bytea, text, text)
+  RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_sym_encrypt_bytea'
+  LANGUAGE c VOLATILE STRICT
+  COST 1;
+
+-- ----------------------------
 -- Function structure for place_new_order
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."place_new_order"("arg_session_id" uuid);
-CREATE OR REPLACE FUNCTION "public"."place_new_order"("arg_session_id" uuid)
+DROP FUNCTION IF EXISTS "public"."place_new_order"("arg_session_id" uuid, "arg_additional_info" text);
+CREATE OR REPLACE FUNCTION "public"."place_new_order"("arg_session_id" uuid, "arg_additional_info" text)
   RETURNS "pg_catalog"."void" AS $BODY$
 DECLARE
 		new_order_details_id INT;
 		cart_item_id INT;
 		cart_item_product_id INT;
 		cart_item_quantity INT;
+		current_available_product_quantity int;
 
 BEGIN
-INSERT INTO public.order_details (total, user_id) 
-values(0,
-	(	
-		SELECT user_id
-		FROM PUBLIC.shopping_session
-		WHERE id = arg_session_id
+	INSERT INTO public.order_details (total, user_id, additional_info) 
+	values(0,
+		(	
+			SELECT user_id
+			FROM PUBLIC.shopping_session
+			WHERE id = arg_session_id
+		),
+		arg_additional_info
 	)
-)
-RETURNING id INTO new_order_details_id;
+	RETURNING id INTO new_order_details_id;
 
   LOOP
 		
@@ -780,6 +863,12 @@ RETURNING id INTO new_order_details_id;
 	END IF;
 	
 	SELECT product_id, quantity into cart_item_product_id, cart_item_quantity from public.cart_item where id = cart_item_id;
+	
+	SELECT quantity into current_available_product_quantity from public.product_inventory where id = (select inventory_id from product where id = cart_item_product_id);
+	
+	if cart_item_quantity > current_available_product_quantity THEN
+		ROLLBACK;
+	END IF;
 	
 	INSERT INTO public.order_item (details_id, product_id, quantity) VALUES (new_order_details_id, cart_item_product_id, cart_item_quantity);
 	
@@ -796,6 +885,95 @@ $BODY$
   COST 100;
 
 -- ----------------------------
+-- Function structure for place_new_order
+-- ----------------------------
+DROP FUNCTION IF EXISTS "public"."place_new_order"("arg_session_id" uuid);
+CREATE OR REPLACE FUNCTION "public"."place_new_order"("arg_session_id" uuid)
+  RETURNS "pg_catalog"."void" AS $BODY$
+DECLARE
+		new_order_details_id INT;
+		cart_item_id INT;
+		cart_item_product_id INT;
+		cart_item_quantity INT;
+		current_available_product_quantity int;
+
+BEGIN
+	INSERT INTO public.order_details (total, user_id) 
+	values(0,
+		(	
+			SELECT user_id
+			FROM PUBLIC.shopping_session
+			WHERE id = arg_session_id
+		)
+	)
+	RETURNING id INTO new_order_details_id;
+
+  LOOP
+		
+  SELECT id into cart_item_id from public.cart_item where session_id = arg_session_id LIMIT 1;    
+	
+	IF cart_item_id is null THEN
+		EXIT;
+	END IF;
+	
+	SELECT product_id, quantity into cart_item_product_id, cart_item_quantity from public.cart_item where id = cart_item_id;
+	
+	SELECT quantity into current_available_product_quantity from public.product_inventory where id = (select inventory_id from product where id = cart_item_product_id);
+	
+	if cart_item_quantity > current_available_product_quantity THEN
+		ROLLBACK;
+	END IF;
+	
+	INSERT INTO public.order_item (details_id, product_id, quantity) VALUES (new_order_details_id, cart_item_product_id, cart_item_quantity);
+	
+	UPDATE public.product_inventory SET quantity = quantity - cart_item_quantity WHERE id = (SELECT inventory_id from public.product where id = cart_item_product_id);
+	
+	UPDATE public.order_details SET total = total + cart_item_quantity * (SELECT price from public.product where id = cart_item_product_id) WHERE id = new_order_details_id;
+	
+	DELETE FROM public.cart_item where id = cart_item_id;
+	
+  END LOOP;
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+-- ----------------------------
+-- Function structure for reload_cart
+-- ----------------------------
+DROP FUNCTION IF EXISTS "public"."reload_cart"("arg_session_id" uuid);
+CREATE OR REPLACE FUNCTION "public"."reload_cart"("arg_session_id" uuid)
+  RETURNS "pg_catalog"."void" AS $BODY$
+	
+	DECLARE 
+		current_product_quantity_in_inventory int;
+		item RECORD;
+		
+	
+	
+	BEGIN
+	
+		FOR item in SELECT id, quantity, product_id from public.cart_item where session_id = arg_session_id LOOP  
+			
+			IF item.id is null THEN
+				EXIT;
+			END IF;
+			
+			select quantity into current_product_quantity_in_inventory from product_inventory where id = (select inventory_id from product where id = item.product_id);
+			
+			if item.quantity > current_product_quantity_in_inventory THEN
+				delete from cart_item where id = item.id;
+			END IF;
+		
+		END LOOP;
+	
+
+	RETURN;
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+-- ----------------------------
 -- Function structure for set_timestamp
 -- ----------------------------
 DROP FUNCTION IF EXISTS "public"."set_timestamp"();
@@ -806,6 +984,37 @@ BEGIN
   RETURN NEW;
 END;
 $BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+-- ----------------------------
+-- Function structure for test
+-- ----------------------------
+DROP FUNCTION IF EXISTS "public"."test"("arg_product_category_id" int4, "arg_store_id" int4, "arg_product_name" varchar);
+CREATE OR REPLACE FUNCTION "public"."test"("arg_product_category_id" int4, "arg_store_id" int4, "arg_product_name" varchar)
+  RETURNS "pg_catalog"."void" AS $BODY$
+	
+	
+	
+	BEGIN
+	
+		SELECT p.id, 
+				p.name, 
+				p.description, 
+				p.price, 
+				p.image
+		FROM public.product as p
+				JOIN public.product_category_assignment as pca ON p.id = pca.product_id
+				JOIN public.product_category as pc ON pca.product_category_id = pc.id
+				JOIN public.product_inventory as pi ON p.inventory_id = pi.id
+				JOIN public.store as s ON pi.store_id = s.id
+		WHERE pc.id = arg_product_category_id or arg_product_category_id is null
+		AND s.id = arg_store_id or arg_store_id is null
+		AND LOWER(p.name) LIKE arg_product_name or arg_product_name is null;
+	
+
+	RETURN;
+END$BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
 
@@ -1059,21 +1268,21 @@ CREATE VIEW "public"."product_details" AS  SELECT p.id,
 -- ----------------------------
 ALTER SEQUENCE "public"."cart_item_id_seq"
 OWNED BY "public"."cart_item"."id";
-SELECT setval('"public"."cart_item_id_seq"', 58, true);
+SELECT setval('"public"."cart_item_id_seq"', 97, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."order_details_id_seq"
 OWNED BY "public"."order_details"."id";
-SELECT setval('"public"."order_details_id_seq"', 26, true);
+SELECT setval('"public"."order_details_id_seq"', 53, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."order_item_id_seq"
 OWNED BY "public"."order_item"."id";
-SELECT setval('"public"."order_item_id_seq"', 22, true);
+SELECT setval('"public"."order_item_id_seq"', 47, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -1087,14 +1296,14 @@ SELECT setval('"public"."product_category_id_seq"', 3, true);
 -- ----------------------------
 ALTER SEQUENCE "public"."product_inventory_id_seq"
 OWNED BY "public"."product"."id";
-SELECT setval('"public"."product_inventory_id_seq"', 63, true);
+SELECT setval('"public"."product_inventory_id_seq"', 81, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."product_inventory_id_seq1"
 OWNED BY "public"."product_inventory"."id";
-SELECT setval('"public"."product_inventory_id_seq1"', 72, true);
+SELECT setval('"public"."product_inventory_id_seq1"', 90, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -1200,7 +1409,7 @@ ALTER TABLE "public"."order_details" ADD CONSTRAINT "user2" FOREIGN KEY ("user_i
 -- ----------------------------
 -- Foreign Keys structure for table order_item
 -- ----------------------------
-ALTER TABLE "public"."order_item" ADD CONSTRAINT "details" FOREIGN KEY ("details_id") REFERENCES "public"."order_details" ("id") ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE "public"."order_item" ADD CONSTRAINT "details" FOREIGN KEY ("details_id") REFERENCES "public"."order_details" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE "public"."order_item" ADD CONSTRAINT "product" FOREIGN KEY ("product_id") REFERENCES "public"."product" ("id") ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- ----------------------------

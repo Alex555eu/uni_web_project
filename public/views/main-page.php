@@ -66,59 +66,50 @@
     </div>
 
 
-
-
-    <div class="products-container" id="products-container">
-        <div class="search-bar-container">
-            <form id="store_select_form" action="/main#products-container" method="POST">
-                <select id="choose_store_id" name="selected_store" onchange="submitStoreSelectForm();">
-                    <option>Choose location</option>
-                    <option value="1">Krakow, ul.Warszawska</option>
-                    <option value="2">Krakow, ul.Starowka</option>
-                </select>
-            </form>
-            <script>
-                function submitStoreSelectForm() {
-                    document.getElementById("store_select_form").submit();
+    <?php
+    $html = '<div class="products-container" id="products-container">';
+        $html .= '<div class="search-bar-container">';
+            $html .= '<select id="choose_category_id" name="selected_category"">';
+                $html .= '<option value="-1">All Products</option>';
+                if (isset($categories)) {
+                    foreach ($categories as $category) {
+                        $html .= '<option value="' . $category->getId() . '">' . $category->getName() . '</option>';
+                    }
                 }
-            </script>
-            <input id="search-bar" type="text" placeholder="Search">
-        </div>
-        <?php
-        require_once __DIR__.'/../../src/models/Product.php';
-        require_once __DIR__.'/../../src/repository/ProductRepository.php';
+            $html .= '</select>';
+            $html .= '<select id="choose_store_id" name="selected_store"">';
+                $html .= '<option value="-1">All Locations</option>';
+                if (isset($locales)) {
+                    foreach ($locales as $locale) {
+                        $html .= '<option value="' . $locale->getId() . '">' . $locale . '</option>';
+                    }
+                }
+            $html .= '</select>';
+        $html .= '<input id="search-bar" type="text" placeholder="Search">';
+    $html .= '</div>';
 
-
-        if ($_SERVER["REQUEST_METHOD"] == 'POST') {
-            $store_id = intval($_POST['selected_store']);
-        } else {
-            $store_id = 1;
-        }
-        $productsRepository = new ProductRepository();
-        $products = $productsRepository->getProductsFromStoreByCategoryName($store_id, "donuts");
-
-        $html = '<div class="product-list">';
-
+    $html .= '<div class="product-list">';
+    if (isset($products)) {
         foreach ($products as $product) {
             $html .= '<div class=product_wrapper>';
-                $html .= '<a href="/select_product?id=' . $product->getId() . '">';
-                    $html .= '<div class="product">';
-                        $html .= '<div class="product_img">';
-                            $html .= '<img src="' . $product->getImage() . '">';
-                        $html .= '</div>';
-                        $html .= '<h2>' . $product->getName() . '</h2>';
-                        $html .= '<p>'. $product->getPrice() . ' $</p>';
-                    $html .= '</div>';
-                $html .= '</a>';
+            $html .= '<a href="/select_product?id=' . $product->getId() . '">';
+            $html .= '<div class="product">';
+            $html .= '<div class="product_img">';
+            $html .= '<img src="' . $product->getImage() . '">';
+            $html .= '</div>';
+            $html .= '<h2>' . $product->getName() . '</h2>';
+            $html .= '<p>' . $product->getPrice() . ' $</p>';
+            $html .= '</div>';
+            $html .= '</a>';
             $html .= '</div>';
         }
+    }
+    $html .= '</div>';
 
-        $html .= '</div>';
+    echo $html;
+    ?>
 
-        echo $html;
-        ?>
 
-    </div>
 
     <template id="product-template">
         <div class="product_wrapper">

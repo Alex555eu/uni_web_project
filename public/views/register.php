@@ -15,7 +15,7 @@
                 echo $messages;
             }
             ?>
-            <form action="register_secure" method="POST">
+            <form action="registerSecure" method="POST">
                 <div id="left">
                     <input name="name" type="text" placeholder="name">
                     <input name="surname" type="text" placeholder="surname">

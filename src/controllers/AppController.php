@@ -21,10 +21,9 @@ class AppController {
     }
 
     protected function render(string $template = null, array $variables = []) {
-
         if(isset($_COOKIE['user_token'])) {
             $validate = new SecurityController();
-            $tmp = $validate->validate_user_token();
+            $tmp = $validate->validateUserToken();
             if(!is_null($tmp))
                 return;
         }

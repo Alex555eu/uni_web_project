@@ -14,23 +14,20 @@ class DefaultController extends AppController {
     }
 
     public function main() {
-        $this->render('main-page');
+        $productsRepository = new ProductRepository();
+        $products = $productsRepository->getAllProducts();
+        $categories = $productsRepository->getAllProductCategories();
+
+        $storeRepository = new StoreRepository();
+        $locales = $storeRepository->getAllLocations();
+
+        $this->render('main-page', ['products' => $products, 'categories' => $categories, 'locales' => $locales]);
     }
 
     public function locales() {
-        $repo = new LocationRepository();
+        $repo = new StoreRepository();
         $locations = $repo->getAllLocations();
         $this->render('locales', ['locales' => $locations]);
-    }
-
-    public function cart() {
-        $repo = new OrderRepository();
-        $cart_data = $repo->getAllCartItems();
-        if (empty($cart_data)){
-            $this->render('cart');
-        } else {
-            $this->render('cart', ['cart_data' => $cart_data]);
-        }
     }
 
     public function login() {
@@ -46,7 +43,13 @@ class DefaultController extends AppController {
     }
 
     public function add_product() {
-        $this->render('add_product');
+        $storeRepo = new StoreRepository();
+        $locales = $storeRepo->getAllLocations();
+
+        $productRepo = new ProductRepository();
+        $productCategories = $productRepo->getAllProductCategories();
+
+        $this->render('add_product', ['locales' => $locales, 'productCategories' => $productCategories]);
     }
 
     public function modify_product() {
@@ -63,15 +66,9 @@ class DefaultController extends AppController {
         $repo = new UserRepository();
         $repo->deleteUserToken();
         $url = "http://" . $_SERVER['HTTP_HOST'];
-        header("Location: {$url}/main");
+        header("Location: {$url}/login");
     }
 
-    public function updateUserData() {
-        $repo = new UserRepository();
-        $repo->updateUserData();
-        $url = "http://" . $_SERVER['HTTP_HOST'];
-        header("Location: {$url}/user");
-    }
 
 
 }

@@ -1,7 +1,7 @@
 <?php
 
 
-class Location {
+class Store {
 
     private $id;
     private $postalCode;
@@ -16,45 +16,41 @@ class Location {
         $this->address = $address;
     }
 
-    public function getPostalCode()
-    {
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id): void {
+        $this->id = $id;
+    }
+
+    public function getPostalCode() {
         return $this->postalCode;
     }
 
-    public function setPostalCode($postalCode): void
-    {
+    public function setPostalCode($postalCode): void {
         $this->postalCode = $postalCode;
     }
 
-    public function getCity()
-    {
+    public function getCity() {
         return $this->city;
     }
 
-    public function setCity($city): void
-    {
+    public function setCity($city): void {
         $this->city = $city;
     }
 
-    public function getAddress()
-    {
+    public function getAddress() {
         return $this->address;
     }
 
-    public function setAddress($address): void
-    {
+    public function setAddress($address): void {
         $this->address = $address;
-    }
-
-    public function getId()
-    {
-        return $this->id;
     }
 
     public function __toString(): string {
         return $this->postalCode . ' ' . $this->city . ', ' . $this->address;
     }
-
 
 }
 

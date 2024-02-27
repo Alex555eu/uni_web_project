@@ -7,7 +7,8 @@ class User {
     private $surname;
     private $id;
 
-    public function __construct(string $email, string $password, string $name, string $surname, string $id = null) {
+
+    public function __construct($email, $password, $name, $surname, $id = null) {
         $this->email = $email;
         $this->password = $password;
         $this->name = $name;
@@ -15,40 +16,47 @@ class User {
         $this->id = $id;
     }
 
-    public function getEmail() : string {
+    public function getEmail() {
         return $this->email;
     }
 
-    public function setEmail(string $email) {
+    public function setEmail($email): void {
         $this->email = $email;
     }
-    public function getPassword() : string {
+
+    public function getPassword() {
         return $this->password;
     }
 
-    public function setPassword(string $password) {
+    public function setPassword($password): void {
         $this->password = $password;
     }
-    public function getName() : string {
+
+    public function getName() {
         return $this->name;
     }
 
-    public function setName(string $name) {
+    public function setName($name): void {
         $this->name = $name;
     }
-    public function getSurName() : string {
+
+    public function getSurname() {
         return $this->surname;
     }
 
-    public function setSurName(string $surname) {
+    public function setSurname($surname): void {
         $this->surname = $surname;
     }
 
-    public function getId() : string {
+    public function getId() {
         return $this->id;
     }
 
-    public function toArray() {
+    public function setId($id): void {
+        $this->id = $id;
+    }
+
+    public function toArray() : array{
         return [
             'email' => $this->getEmail(),
             'password' => $this->getPassword(),

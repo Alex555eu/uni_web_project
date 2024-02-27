@@ -10,7 +10,7 @@
             <div>
                 <img src="public/images/logo.svg" alt="logo img">
             </div>
-            <form action="login_secure" method="POST">
+            <form action="loginSecure" method="POST">
                 <input name="email" type="text" placeholder="email">
                 <input name="password" type="password" placeholder="password">
                 <?php

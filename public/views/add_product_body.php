@@ -31,13 +31,22 @@
             <textarea name="description" rows=5 placeholder="Product Description"></textarea><br/>
             <?php
                 $html = '<select id="store_locations" name="store_id">';
-                $repo = new LocationRepository();
-                $locations = $repo->getAllLocations();
-                foreach ($locations as $location) {
-                    $html .= "<option value=\"{$location->getId()}\">{$location}</option>";
-
+                if (isset($locales)) {
+                    foreach ($locales as $locale) {
+                        $html .= "<option value=\"{$locale->getId()}\">{$locale}</option>";
+                    }
                 }
                 $html .= '</select><br/>';
+
+                $html .= '<output>Category  </output>';
+                $html .= '<select id="product_categories" name="category_id">';
+                if (isset($productCategories)) {
+                    foreach ($productCategories as $productCategory) {
+                        $html .= "<option value=\"{$productCategory->getId()}\">{$productCategory->getName()}</option>";
+                    }
+                }
+                $html .= '</select><br/>';
+
                 echo $html;
             ?>
             <label>Product Image</label>

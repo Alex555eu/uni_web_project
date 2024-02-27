@@ -19,15 +19,15 @@ Every user has option to change their personal data.
 
 ## Presentation
 
-![Alt text](info/screen_shot_1.png)
+![Alt text](screenshots/screen_shot_1.png)
 
-![Alt text](info/screen_shot_2.png)
+![Alt text](screenshots/screen_shot_2.png)
 
-![Alt text](info/screen_shot_3.png)
+![Alt text](screenshots/screen_shot_3.png)
 
-![Alt text](info/screen_shot_4.png)
+![Alt text](screenshots/screen_shot_4.png)
 
-![Alt text](info/database_erd.png)
+![Alt text](screenshots/database_erd_no_views.png)
 
 
 ## Requirements

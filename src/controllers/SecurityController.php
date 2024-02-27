@@ -4,11 +4,9 @@
 //require_once __DIR__.'/../models/User.php';
 //require_once __DIR__.'/../repository/UserRepository.php';
 
-
-
 class SecurityController extends AppController {
 
-    public function login_secure() {
+    public function loginSecure() {
         $userRepository = new UserRepository();
         if (!$this->isPost()) {
             return $this->render('login');
@@ -23,7 +21,7 @@ class SecurityController extends AppController {
             return $this->render('login', ['messages' => ['incorrect password']]);
         }
 
-        $new_session = $this->create_user_token($user->getId());
+        $new_session = $this->createUserToken($user->getId());
 
         setcookie("user_token", $new_session, time() + (365 * 24 * 60 * 60), '/');
 
@@ -32,7 +30,7 @@ class SecurityController extends AppController {
 
     }
 
-    public function register_secure() {
+    public function registerSecure() {
         if (!$this->isPost()) {
             return $this->render('login');
         }
@@ -55,7 +53,7 @@ class SecurityController extends AppController {
         header("Location: {$url}/login");
     }
 
-    public function validate_user_token() {
+    public function validateUserToken() {
         if (isset($_COOKIE['user_token'])) {
             $db = Database::getInstance();
             $conn = $db->getConnection();
@@ -82,7 +80,7 @@ class SecurityController extends AppController {
         return null;
     }
 
-    private function create_user_token($user_id) {
+    private function createUserToken($user_id) {
         $db = Database::getInstance();
         $conn = $db->getConnection();
         $conn->beginTransaction();
@@ -100,6 +98,13 @@ class SecurityController extends AppController {
         }
         $conn->commit();
         return $new_session_id['create_user_token'];
+    }
+
+    public function updateUserData() {
+        $repo = new UserRepository();
+        $repo->updateUserData();
+        $url = "http://" . $_SERVER['HTTP_HOST'];
+        header("Location: {$url}/user");
     }
 
 }
