@@ -12,14 +12,15 @@
  Target Server Version : 160001 (160001)
  File Encoding         : 65001
 
- Date: 27/02/2024 13:45:52
+ Date: 27/02/2024 16:54:58
 */
 
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- ----------------------------
 -- Sequence structure for cart_item_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."cart_item_id_seq";
+--DROP SEQUENCE IF EXISTS "public"."cart_item_id_seq";
 CREATE SEQUENCE "public"."cart_item_id_seq" 
 INCREMENT 1
 MINVALUE  1
@@ -30,7 +31,7 @@ CACHE 1;
 -- ----------------------------
 -- Sequence structure for order_details_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."order_details_id_seq";
+--DROP SEQUENCE IF EXISTS "public"."order_details_id_seq";
 CREATE SEQUENCE "public"."order_details_id_seq" 
 INCREMENT 1
 MINVALUE  1
@@ -41,7 +42,7 @@ CACHE 1;
 -- ----------------------------
 -- Sequence structure for order_item_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."order_item_id_seq";
+--DROP SEQUENCE IF EXISTS "public"."order_item_id_seq";
 CREATE SEQUENCE "public"."order_item_id_seq" 
 INCREMENT 1
 MINVALUE  1
@@ -52,7 +53,7 @@ CACHE 1;
 -- ----------------------------
 -- Sequence structure for product_category_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."product_category_id_seq";
+--DROP SEQUENCE IF EXISTS "public"."product_category_id_seq";
 CREATE SEQUENCE "public"."product_category_id_seq" 
 INCREMENT 1
 MINVALUE  1
@@ -63,7 +64,7 @@ CACHE 1;
 -- ----------------------------
 -- Sequence structure for product_inventory_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."product_inventory_id_seq";
+--DROP SEQUENCE IF EXISTS "public"."product_inventory_id_seq";
 CREATE SEQUENCE "public"."product_inventory_id_seq" 
 INCREMENT 1
 MINVALUE  1
@@ -74,7 +75,7 @@ CACHE 1;
 -- ----------------------------
 -- Sequence structure for product_inventory_id_seq1
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."product_inventory_id_seq1";
+-- SEQUENCE IF EXISTS "public"."product_inventory_id_seq1";
 CREATE SEQUENCE "public"."product_inventory_id_seq1" 
 INCREMENT 1
 MINVALUE  1
@@ -85,7 +86,7 @@ CACHE 1;
 -- ----------------------------
 -- Sequence structure for store_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."store_id_seq";
+--DROP SEQUENCE IF EXISTS "public"."store_id_seq";
 CREATE SEQUENCE "public"."store_id_seq" 
 INCREMENT 1
 MINVALUE  1
@@ -96,7 +97,7 @@ CACHE 1;
 -- ----------------------------
 -- Table structure for cart_item
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."cart_item";
+--DROP TABLE IF EXISTS "public"."cart_item";
 CREATE TABLE "public"."cart_item" (
   "id" int4 NOT NULL DEFAULT nextval('cart_item_id_seq'::regclass),
   "product_id" int4 NOT NULL,
@@ -112,7 +113,7 @@ CREATE TABLE "public"."cart_item" (
 -- ----------------------------
 -- Table structure for order_details
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."order_details";
+--DROP TABLE IF EXISTS "public"."order_details";
 CREATE TABLE "public"."order_details" (
   "id" int4 NOT NULL DEFAULT nextval('order_details_id_seq'::regclass),
   "total" numeric(10,2) NOT NULL,
@@ -135,7 +136,7 @@ INSERT INTO "public"."order_details" VALUES (53, 89.90, '4f8626f4-75bd-4606-90c8
 -- ----------------------------
 -- Table structure for order_item
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."order_item";
+--DROP TABLE IF EXISTS "public"."order_item";
 CREATE TABLE "public"."order_item" (
   "id" int4 NOT NULL DEFAULT nextval('order_item_id_seq'::regclass),
   "details_id" int4 NOT NULL,
@@ -159,7 +160,7 @@ INSERT INTO "public"."order_item" VALUES (47, 53, 73, 10);
 -- ----------------------------
 -- Table structure for product
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."product";
+--DROP TABLE IF EXISTS "public"."product";
 CREATE TABLE "public"."product" (
   "id" int4 NOT NULL DEFAULT nextval('product_inventory_id_seq'::regclass),
   "name" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
@@ -192,7 +193,7 @@ INSERT INTO "public"."product" VALUES (2, 'doh nut', 'Dipped in pink glaze and t
 -- ----------------------------
 -- Table structure for product_category
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."product_category";
+--DROP TABLE IF EXISTS "public"."product_category";
 CREATE TABLE "public"."product_category" (
   "id" int4 NOT NULL DEFAULT nextval('product_category_id_seq'::regclass),
   "name" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
@@ -209,7 +210,7 @@ INSERT INTO "public"."product_category" VALUES (3, 'drinks', 'different types of
 -- ----------------------------
 -- Table structure for product_category_assignment
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."product_category_assignment";
+--DROP TABLE IF EXISTS "public"."product_category_assignment";
 CREATE TABLE "public"."product_category_assignment" (
   "product_id" int4 NOT NULL,
   "product_category_id" int4 NOT NULL
@@ -235,7 +236,7 @@ INSERT INTO "public"."product_category_assignment" VALUES (75, 3);
 -- ----------------------------
 -- Table structure for product_inventory
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."product_inventory";
+--DROP TABLE IF EXISTS "public"."product_inventory";
 CREATE TABLE "public"."product_inventory" (
   "id" int4 NOT NULL DEFAULT nextval('product_inventory_id_seq1'::regclass),
   "quantity" numeric(10,2) NOT NULL,
@@ -262,7 +263,7 @@ INSERT INTO "public"."product_inventory" VALUES (82, 0.00, 1);
 -- ----------------------------
 -- Table structure for shopping_session
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."shopping_session";
+--DROP TABLE IF EXISTS "public"."shopping_session";
 CREATE TABLE "public"."shopping_session" (
   "id" uuid NOT NULL DEFAULT uuid_generate_v4(),
   "user_id" uuid NOT NULL,
@@ -277,7 +278,7 @@ CREATE TABLE "public"."shopping_session" (
 -- ----------------------------
 -- Table structure for store
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."store";
+--DROP TABLE IF EXISTS "public"."store";
 CREATE TABLE "public"."store" (
   "id" int4 NOT NULL DEFAULT nextval('store_id_seq'::regclass),
   "postal_code" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
@@ -295,7 +296,7 @@ INSERT INTO "public"."store" VALUES (2, '32-301', 'Krakow', 'ul. Starowka 1');
 -- ----------------------------
 -- Table structure for user
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."user";
+--DROP TABLE IF EXISTS "public"."user";
 CREATE TABLE "public"."user" (
   "id" uuid NOT NULL DEFAULT uuid_generate_v4(),
   "password" text COLLATE "pg_catalog"."default" NOT NULL,
@@ -314,7 +315,7 @@ INSERT INTO "public"."user" VALUES ('da807565-23c2-434e-afea-7bbe4bccdd01', '$2y
 -- ----------------------------
 -- Table structure for worker
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."worker";
+--DROP TABLE IF EXISTS "public"."worker";
 CREATE TABLE "public"."worker" (
   "id" uuid NOT NULL DEFAULT uuid_generate_v4(),
   "store_id" int4 NOT NULL,
@@ -332,7 +333,7 @@ INSERT INTO "public"."worker" VALUES ('340b162f-d1bc-4af3-8d41-7d554aa625df', 1,
 -- ----------------------------
 -- Function structure for _navicat_temp_stored_proc
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."_navicat_temp_stored_proc"("arg" uuid);
+--DROP FUNCTION IF EXISTS "public"."_navicat_temp_stored_proc"("arg" uuid);
 CREATE OR REPLACE FUNCTION "public"."_navicat_temp_stored_proc"("arg" uuid)
   RETURNS "pg_catalog"."uuid" AS $BODY$
 	
@@ -365,7 +366,7 @@ END$BODY$
 -- ----------------------------
 -- Function structure for add_product_to_cart
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."add_product_to_cart"("arg_product_id" int4, "arg_quantity" int4, "arg_session_id" uuid);
+--DROP FUNCTION IF EXISTS "public"."add_product_to_cart"("arg_product_id" int4, "arg_quantity" int4, "arg_session_id" uuid);
 CREATE OR REPLACE FUNCTION "public"."add_product_to_cart"("arg_product_id" int4, "arg_quantity" int4, "arg_session_id" uuid)
   RETURNS "pg_catalog"."void" AS $BODY$
 	
@@ -404,7 +405,7 @@ END$BODY$
 -- ----------------------------
 -- Function structure for armor
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."armor"(bytea);
+--DROP FUNCTION IF EXISTS "public"."armor"(bytea);
 CREATE OR REPLACE FUNCTION "public"."armor"(bytea)
   RETURNS "pg_catalog"."text" AS '$libdir/pgcrypto', 'pg_armor'
   LANGUAGE c IMMUTABLE STRICT
@@ -413,7 +414,7 @@ CREATE OR REPLACE FUNCTION "public"."armor"(bytea)
 -- ----------------------------
 -- Function structure for armor
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."armor"(bytea, _text, _text);
+--DROP FUNCTION IF EXISTS "public"."armor"(bytea, _text, _text);
 CREATE OR REPLACE FUNCTION "public"."armor"(bytea, _text, _text)
   RETURNS "pg_catalog"."text" AS '$libdir/pgcrypto', 'pg_armor'
   LANGUAGE c IMMUTABLE STRICT
@@ -422,7 +423,7 @@ CREATE OR REPLACE FUNCTION "public"."armor"(bytea, _text, _text)
 -- ----------------------------
 -- Function structure for create_user_token
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."create_user_token"("arg" uuid);
+--DROP FUNCTION IF EXISTS "public"."create_user_token"("arg" uuid);
 CREATE OR REPLACE FUNCTION "public"."create_user_token"("arg" uuid)
   RETURNS "pg_catalog"."uuid" AS $BODY$
 	
@@ -447,7 +448,7 @@ END$BODY$
 -- ----------------------------
 -- Function structure for crypt
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."crypt"(text, text);
+--DROP FUNCTION IF EXISTS "public"."crypt"(text, text);
 CREATE OR REPLACE FUNCTION "public"."crypt"(text, text)
   RETURNS "pg_catalog"."text" AS '$libdir/pgcrypto', 'pg_crypt'
   LANGUAGE c IMMUTABLE STRICT
@@ -456,7 +457,7 @@ CREATE OR REPLACE FUNCTION "public"."crypt"(text, text)
 -- ----------------------------
 -- Function structure for dearmor
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."dearmor"(text);
+--DROP FUNCTION IF EXISTS "public"."dearmor"(text);
 CREATE OR REPLACE FUNCTION "public"."dearmor"(text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pg_dearmor'
   LANGUAGE c IMMUTABLE STRICT
@@ -465,7 +466,7 @@ CREATE OR REPLACE FUNCTION "public"."dearmor"(text)
 -- ----------------------------
 -- Function structure for decrypt
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."decrypt"(bytea, bytea, text);
+--DROP FUNCTION IF EXISTS "public"."decrypt"(bytea, bytea, text);
 CREATE OR REPLACE FUNCTION "public"."decrypt"(bytea, bytea, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pg_decrypt'
   LANGUAGE c IMMUTABLE STRICT
@@ -474,7 +475,7 @@ CREATE OR REPLACE FUNCTION "public"."decrypt"(bytea, bytea, text)
 -- ----------------------------
 -- Function structure for decrypt_iv
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."decrypt_iv"(bytea, bytea, bytea, text);
+--DROP FUNCTION IF EXISTS "public"."decrypt_iv"(bytea, bytea, bytea, text);
 CREATE OR REPLACE FUNCTION "public"."decrypt_iv"(bytea, bytea, bytea, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pg_decrypt_iv'
   LANGUAGE c IMMUTABLE STRICT
@@ -483,7 +484,7 @@ CREATE OR REPLACE FUNCTION "public"."decrypt_iv"(bytea, bytea, bytea, text)
 -- ----------------------------
 -- Function structure for delete_or_disable_product
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."delete_or_disable_product"("arg_product_id" int4);
+--DROP FUNCTION IF EXISTS "public"."delete_or_disable_product"("arg_product_id" int4);
 CREATE OR REPLACE FUNCTION "public"."delete_or_disable_product"("arg_product_id" int4)
   RETURNS "pg_catalog"."varchar" AS $BODY$
 DECLARE
@@ -517,8 +518,8 @@ $BODY$
 -- ----------------------------
 -- Function structure for digest
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."digest"(bytea, text);
-CREATE OR REPLACE FUNCTION "public"."digest"(bytea, text)
+--DROP FUNCTION IF EXISTS "public"."digest"(text, text);
+CREATE OR REPLACE FUNCTION "public"."digest"(text, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pg_digest'
   LANGUAGE c IMMUTABLE STRICT
   COST 1;
@@ -526,8 +527,8 @@ CREATE OR REPLACE FUNCTION "public"."digest"(bytea, text)
 -- ----------------------------
 -- Function structure for digest
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."digest"(text, text);
-CREATE OR REPLACE FUNCTION "public"."digest"(text, text)
+--DROP FUNCTION IF EXISTS "public"."digest"(bytea, text);
+CREATE OR REPLACE FUNCTION "public"."digest"(bytea, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pg_digest'
   LANGUAGE c IMMUTABLE STRICT
   COST 1;
@@ -535,7 +536,7 @@ CREATE OR REPLACE FUNCTION "public"."digest"(text, text)
 -- ----------------------------
 -- Function structure for encrypt
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."encrypt"(bytea, bytea, text);
+--DROP FUNCTION IF EXISTS "public"."encrypt"(bytea, bytea, text);
 CREATE OR REPLACE FUNCTION "public"."encrypt"(bytea, bytea, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pg_encrypt'
   LANGUAGE c IMMUTABLE STRICT
@@ -544,7 +545,7 @@ CREATE OR REPLACE FUNCTION "public"."encrypt"(bytea, bytea, text)
 -- ----------------------------
 -- Function structure for encrypt_iv
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."encrypt_iv"(bytea, bytea, bytea, text);
+--DROP FUNCTION IF EXISTS "public"."encrypt_iv"(bytea, bytea, bytea, text);
 CREATE OR REPLACE FUNCTION "public"."encrypt_iv"(bytea, bytea, bytea, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pg_encrypt_iv'
   LANGUAGE c IMMUTABLE STRICT
@@ -553,7 +554,7 @@ CREATE OR REPLACE FUNCTION "public"."encrypt_iv"(bytea, bytea, bytea, text)
 -- ----------------------------
 -- Function structure for example_do_while
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."example_do_while"();
+--DROP FUNCTION IF EXISTS "public"."example_do_while"();
 CREATE OR REPLACE FUNCTION "public"."example_do_while"()
   RETURNS "pg_catalog"."void" AS $BODY$
 DECLARE
@@ -597,7 +598,7 @@ $BODY$
 -- ----------------------------
 -- Function structure for gen_random_bytes
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."gen_random_bytes"(int4);
+--DROP FUNCTION IF EXISTS "public"."gen_random_bytes"(int4);
 CREATE OR REPLACE FUNCTION "public"."gen_random_bytes"(int4)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pg_random_bytes'
   LANGUAGE c VOLATILE STRICT
@@ -606,7 +607,7 @@ CREATE OR REPLACE FUNCTION "public"."gen_random_bytes"(int4)
 -- ----------------------------
 -- Function structure for gen_random_uuid
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."gen_random_uuid"();
+--DROP FUNCTION IF EXISTS "public"."gen_random_uuid"();
 CREATE OR REPLACE FUNCTION "public"."gen_random_uuid"()
   RETURNS "pg_catalog"."uuid" AS '$libdir/pgcrypto', 'pg_random_uuid'
   LANGUAGE c VOLATILE
@@ -615,26 +616,26 @@ CREATE OR REPLACE FUNCTION "public"."gen_random_uuid"()
 -- ----------------------------
 -- Function structure for gen_salt
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."gen_salt"(text);
-CREATE OR REPLACE FUNCTION "public"."gen_salt"(text)
-  RETURNS "pg_catalog"."text" AS '$libdir/pgcrypto', 'pg_gen_salt'
-  LANGUAGE c VOLATILE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for gen_salt
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."gen_salt"(text, int4);
+--DROP FUNCTION IF EXISTS "public"."gen_salt"(text, int4);
 CREATE OR REPLACE FUNCTION "public"."gen_salt"(text, int4)
   RETURNS "pg_catalog"."text" AS '$libdir/pgcrypto', 'pg_gen_salt_rounds'
   LANGUAGE c VOLATILE STRICT
   COST 1;
 
 -- ----------------------------
+-- Function structure for gen_salt
+-- ----------------------------
+--DROP FUNCTION IF EXISTS "public"."gen_salt"(text);
+CREATE OR REPLACE FUNCTION "public"."gen_salt"(text)
+  RETURNS "pg_catalog"."text" AS '$libdir/pgcrypto', 'pg_gen_salt'
+  LANGUAGE c VOLATILE STRICT
+  COST 1;
+
+-- ----------------------------
 -- Function structure for hmac
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."hmac"(text, text, text);
-CREATE OR REPLACE FUNCTION "public"."hmac"(text, text, text)
+--DROP FUNCTION IF EXISTS "public"."hmac"(bytea, bytea, text);
+CREATE OR REPLACE FUNCTION "public"."hmac"(bytea, bytea, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pg_hmac'
   LANGUAGE c IMMUTABLE STRICT
   COST 1;
@@ -642,8 +643,8 @@ CREATE OR REPLACE FUNCTION "public"."hmac"(text, text, text)
 -- ----------------------------
 -- Function structure for hmac
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."hmac"(bytea, bytea, text);
-CREATE OR REPLACE FUNCTION "public"."hmac"(bytea, bytea, text)
+--DROP FUNCTION IF EXISTS "public"."hmac"(text, text, text);
+CREATE OR REPLACE FUNCTION "public"."hmac"(text, text, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pg_hmac'
   LANGUAGE c IMMUTABLE STRICT
   COST 1;
@@ -651,7 +652,7 @@ CREATE OR REPLACE FUNCTION "public"."hmac"(bytea, bytea, text)
 -- ----------------------------
 -- Function structure for pgp_armor_headers
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_armor_headers"(text, OUT "key" text, OUT "value" text);
+--DROP FUNCTION IF EXISTS "public"."pgp_armor_headers"(text, OUT "key" text, OUT "value" text);
 CREATE OR REPLACE FUNCTION "public"."pgp_armor_headers"(IN text, OUT "key" text, OUT "value" text)
   RETURNS SETOF "pg_catalog"."record" AS '$libdir/pgcrypto', 'pgp_armor_headers'
   LANGUAGE c IMMUTABLE STRICT
@@ -661,7 +662,7 @@ CREATE OR REPLACE FUNCTION "public"."pgp_armor_headers"(IN text, OUT "key" text,
 -- ----------------------------
 -- Function structure for pgp_key_id
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_key_id"(bytea);
+--DROP FUNCTION IF EXISTS "public"."pgp_key_id"(bytea);
 CREATE OR REPLACE FUNCTION "public"."pgp_key_id"(bytea)
   RETURNS "pg_catalog"."text" AS '$libdir/pgcrypto', 'pgp_key_id_w'
   LANGUAGE c IMMUTABLE STRICT
@@ -670,7 +671,7 @@ CREATE OR REPLACE FUNCTION "public"."pgp_key_id"(bytea)
 -- ----------------------------
 -- Function structure for pgp_pub_decrypt
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt"(bytea, bytea);
+--DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt"(bytea, bytea);
 CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt"(bytea, bytea)
   RETURNS "pg_catalog"."text" AS '$libdir/pgcrypto', 'pgp_pub_decrypt_text'
   LANGUAGE c IMMUTABLE STRICT
@@ -679,8 +680,8 @@ CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt"(bytea, bytea)
 -- ----------------------------
 -- Function structure for pgp_pub_decrypt
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt"(bytea, bytea, text, text);
-CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt"(bytea, bytea, text, text)
+--DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt"(bytea, bytea, text);
+CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt"(bytea, bytea, text)
   RETURNS "pg_catalog"."text" AS '$libdir/pgcrypto', 'pgp_pub_decrypt_text'
   LANGUAGE c IMMUTABLE STRICT
   COST 1;
@@ -688,8 +689,8 @@ CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt"(bytea, bytea, text, text)
 -- ----------------------------
 -- Function structure for pgp_pub_decrypt
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt"(bytea, bytea, text);
-CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt"(bytea, bytea, text)
+--DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt"(bytea, bytea, text, text);
+CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt"(bytea, bytea, text, text)
   RETURNS "pg_catalog"."text" AS '$libdir/pgcrypto', 'pgp_pub_decrypt_text'
   LANGUAGE c IMMUTABLE STRICT
   COST 1;
@@ -697,7 +698,16 @@ CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt"(bytea, bytea, text)
 -- ----------------------------
 -- Function structure for pgp_pub_decrypt_bytea
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt_bytea"(bytea, bytea, text, text);
+--DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt_bytea"(bytea, bytea, text);
+CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt_bytea"(bytea, bytea, text)
+  RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_pub_decrypt_bytea'
+  LANGUAGE c IMMUTABLE STRICT
+  COST 1;
+
+-- ----------------------------
+-- Function structure for pgp_pub_decrypt_bytea
+-- ----------------------------
+--DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt_bytea"(bytea, bytea, text, text);
 CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt_bytea"(bytea, bytea, text, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_pub_decrypt_bytea'
   LANGUAGE c IMMUTABLE STRICT
@@ -706,17 +716,8 @@ CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt_bytea"(bytea, bytea, text, 
 -- ----------------------------
 -- Function structure for pgp_pub_decrypt_bytea
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt_bytea"(bytea, bytea);
+--DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt_bytea"(bytea, bytea);
 CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt_bytea"(bytea, bytea)
-  RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_pub_decrypt_bytea'
-  LANGUAGE c IMMUTABLE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for pgp_pub_decrypt_bytea
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_pub_decrypt_bytea"(bytea, bytea, text);
-CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt_bytea"(bytea, bytea, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_pub_decrypt_bytea'
   LANGUAGE c IMMUTABLE STRICT
   COST 1;
@@ -724,8 +725,8 @@ CREATE OR REPLACE FUNCTION "public"."pgp_pub_decrypt_bytea"(bytea, bytea, text)
 -- ----------------------------
 -- Function structure for pgp_pub_encrypt
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_pub_encrypt"(text, bytea);
-CREATE OR REPLACE FUNCTION "public"."pgp_pub_encrypt"(text, bytea)
+--DROP FUNCTION IF EXISTS "public"."pgp_pub_encrypt"(text, bytea, text);
+CREATE OR REPLACE FUNCTION "public"."pgp_pub_encrypt"(text, bytea, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_pub_encrypt_text'
   LANGUAGE c VOLATILE STRICT
   COST 1;
@@ -733,8 +734,8 @@ CREATE OR REPLACE FUNCTION "public"."pgp_pub_encrypt"(text, bytea)
 -- ----------------------------
 -- Function structure for pgp_pub_encrypt
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_pub_encrypt"(text, bytea, text);
-CREATE OR REPLACE FUNCTION "public"."pgp_pub_encrypt"(text, bytea, text)
+--DROP FUNCTION IF EXISTS "public"."pgp_pub_encrypt"(text, bytea);
+CREATE OR REPLACE FUNCTION "public"."pgp_pub_encrypt"(text, bytea)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_pub_encrypt_text'
   LANGUAGE c VOLATILE STRICT
   COST 1;
@@ -742,8 +743,8 @@ CREATE OR REPLACE FUNCTION "public"."pgp_pub_encrypt"(text, bytea, text)
 -- ----------------------------
 -- Function structure for pgp_pub_encrypt_bytea
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_pub_encrypt_bytea"(bytea, bytea);
-CREATE OR REPLACE FUNCTION "public"."pgp_pub_encrypt_bytea"(bytea, bytea)
+--DROP FUNCTION IF EXISTS "public"."pgp_pub_encrypt_bytea"(bytea, bytea, text);
+CREATE OR REPLACE FUNCTION "public"."pgp_pub_encrypt_bytea"(bytea, bytea, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_pub_encrypt_bytea'
   LANGUAGE c VOLATILE STRICT
   COST 1;
@@ -751,8 +752,8 @@ CREATE OR REPLACE FUNCTION "public"."pgp_pub_encrypt_bytea"(bytea, bytea)
 -- ----------------------------
 -- Function structure for pgp_pub_encrypt_bytea
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_pub_encrypt_bytea"(bytea, bytea, text);
-CREATE OR REPLACE FUNCTION "public"."pgp_pub_encrypt_bytea"(bytea, bytea, text)
+--DROP FUNCTION IF EXISTS "public"."pgp_pub_encrypt_bytea"(bytea, bytea);
+CREATE OR REPLACE FUNCTION "public"."pgp_pub_encrypt_bytea"(bytea, bytea)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_pub_encrypt_bytea'
   LANGUAGE c VOLATILE STRICT
   COST 1;
@@ -760,7 +761,7 @@ CREATE OR REPLACE FUNCTION "public"."pgp_pub_encrypt_bytea"(bytea, bytea, text)
 -- ----------------------------
 -- Function structure for pgp_sym_decrypt
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_sym_decrypt"(bytea, text, text);
+--DROP FUNCTION IF EXISTS "public"."pgp_sym_decrypt"(bytea, text, text);
 CREATE OR REPLACE FUNCTION "public"."pgp_sym_decrypt"(bytea, text, text)
   RETURNS "pg_catalog"."text" AS '$libdir/pgcrypto', 'pgp_sym_decrypt_text'
   LANGUAGE c IMMUTABLE STRICT
@@ -769,7 +770,7 @@ CREATE OR REPLACE FUNCTION "public"."pgp_sym_decrypt"(bytea, text, text)
 -- ----------------------------
 -- Function structure for pgp_sym_decrypt
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_sym_decrypt"(bytea, text);
+--DROP FUNCTION IF EXISTS "public"."pgp_sym_decrypt"(bytea, text);
 CREATE OR REPLACE FUNCTION "public"."pgp_sym_decrypt"(bytea, text)
   RETURNS "pg_catalog"."text" AS '$libdir/pgcrypto', 'pgp_sym_decrypt_text'
   LANGUAGE c IMMUTABLE STRICT
@@ -778,7 +779,7 @@ CREATE OR REPLACE FUNCTION "public"."pgp_sym_decrypt"(bytea, text)
 -- ----------------------------
 -- Function structure for pgp_sym_decrypt_bytea
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_sym_decrypt_bytea"(bytea, text);
+--DROP FUNCTION IF EXISTS "public"."pgp_sym_decrypt_bytea"(bytea, text);
 CREATE OR REPLACE FUNCTION "public"."pgp_sym_decrypt_bytea"(bytea, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_sym_decrypt_bytea'
   LANGUAGE c IMMUTABLE STRICT
@@ -787,7 +788,7 @@ CREATE OR REPLACE FUNCTION "public"."pgp_sym_decrypt_bytea"(bytea, text)
 -- ----------------------------
 -- Function structure for pgp_sym_decrypt_bytea
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_sym_decrypt_bytea"(bytea, text, text);
+--DROP FUNCTION IF EXISTS "public"."pgp_sym_decrypt_bytea"(bytea, text, text);
 CREATE OR REPLACE FUNCTION "public"."pgp_sym_decrypt_bytea"(bytea, text, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_sym_decrypt_bytea'
   LANGUAGE c IMMUTABLE STRICT
@@ -796,7 +797,7 @@ CREATE OR REPLACE FUNCTION "public"."pgp_sym_decrypt_bytea"(bytea, text, text)
 -- ----------------------------
 -- Function structure for pgp_sym_encrypt
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_sym_encrypt"(text, text, text);
+--DROP FUNCTION IF EXISTS "public"."pgp_sym_encrypt"(text, text, text);
 CREATE OR REPLACE FUNCTION "public"."pgp_sym_encrypt"(text, text, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_sym_encrypt_text'
   LANGUAGE c VOLATILE STRICT
@@ -805,7 +806,7 @@ CREATE OR REPLACE FUNCTION "public"."pgp_sym_encrypt"(text, text, text)
 -- ----------------------------
 -- Function structure for pgp_sym_encrypt
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_sym_encrypt"(text, text);
+--DROP FUNCTION IF EXISTS "public"."pgp_sym_encrypt"(text, text);
 CREATE OR REPLACE FUNCTION "public"."pgp_sym_encrypt"(text, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_sym_encrypt_text'
   LANGUAGE c VOLATILE STRICT
@@ -814,8 +815,8 @@ CREATE OR REPLACE FUNCTION "public"."pgp_sym_encrypt"(text, text)
 -- ----------------------------
 -- Function structure for pgp_sym_encrypt_bytea
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_sym_encrypt_bytea"(bytea, text);
-CREATE OR REPLACE FUNCTION "public"."pgp_sym_encrypt_bytea"(bytea, text)
+--DROP FUNCTION IF EXISTS "public"."pgp_sym_encrypt_bytea"(bytea, text, text);
+CREATE OR REPLACE FUNCTION "public"."pgp_sym_encrypt_bytea"(bytea, text, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_sym_encrypt_bytea'
   LANGUAGE c VOLATILE STRICT
   COST 1;
@@ -823,8 +824,8 @@ CREATE OR REPLACE FUNCTION "public"."pgp_sym_encrypt_bytea"(bytea, text)
 -- ----------------------------
 -- Function structure for pgp_sym_encrypt_bytea
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."pgp_sym_encrypt_bytea"(bytea, text, text);
-CREATE OR REPLACE FUNCTION "public"."pgp_sym_encrypt_bytea"(bytea, text, text)
+--DROP FUNCTION IF EXISTS "public"."pgp_sym_encrypt_bytea"(bytea, text);
+CREATE OR REPLACE FUNCTION "public"."pgp_sym_encrypt_bytea"(bytea, text)
   RETURNS "pg_catalog"."bytea" AS '$libdir/pgcrypto', 'pgp_sym_encrypt_bytea'
   LANGUAGE c VOLATILE STRICT
   COST 1;
@@ -832,7 +833,7 @@ CREATE OR REPLACE FUNCTION "public"."pgp_sym_encrypt_bytea"(bytea, text, text)
 -- ----------------------------
 -- Function structure for place_new_order
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."place_new_order"("arg_session_id" uuid, "arg_additional_info" text);
+--DROP FUNCTION IF EXISTS "public"."place_new_order"("arg_session_id" uuid, "arg_additional_info" text);
 CREATE OR REPLACE FUNCTION "public"."place_new_order"("arg_session_id" uuid, "arg_additional_info" text)
   RETURNS "pg_catalog"."void" AS $BODY$
 DECLARE
@@ -887,7 +888,7 @@ $BODY$
 -- ----------------------------
 -- Function structure for place_new_order
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."place_new_order"("arg_session_id" uuid);
+--DROP FUNCTION IF EXISTS "public"."place_new_order"("arg_session_id" uuid);
 CREATE OR REPLACE FUNCTION "public"."place_new_order"("arg_session_id" uuid)
   RETURNS "pg_catalog"."void" AS $BODY$
 DECLARE
@@ -941,7 +942,7 @@ $BODY$
 -- ----------------------------
 -- Function structure for reload_cart
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."reload_cart"("arg_session_id" uuid);
+--DROP FUNCTION IF EXISTS "public"."reload_cart"("arg_session_id" uuid);
 CREATE OR REPLACE FUNCTION "public"."reload_cart"("arg_session_id" uuid)
   RETURNS "pg_catalog"."void" AS $BODY$
 	
@@ -976,7 +977,7 @@ END$BODY$
 -- ----------------------------
 -- Function structure for set_timestamp
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."set_timestamp"();
+--DROP FUNCTION IF EXISTS "public"."set_timestamp"();
 CREATE OR REPLACE FUNCTION "public"."set_timestamp"()
   RETURNS "pg_catalog"."trigger" AS $BODY$
 BEGIN
@@ -988,102 +989,9 @@ $BODY$
   COST 100;
 
 -- ----------------------------
--- Function structure for test
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."test"("arg_product_category_id" int4, "arg_store_id" int4, "arg_product_name" varchar);
-CREATE OR REPLACE FUNCTION "public"."test"("arg_product_category_id" int4, "arg_store_id" int4, "arg_product_name" varchar)
-  RETURNS "pg_catalog"."void" AS $BODY$
-	
-	
-	
-	BEGIN
-	
-		SELECT p.id, 
-				p.name, 
-				p.description, 
-				p.price, 
-				p.image
-		FROM public.product as p
-				JOIN public.product_category_assignment as pca ON p.id = pca.product_id
-				JOIN public.product_category as pc ON pca.product_category_id = pc.id
-				JOIN public.product_inventory as pi ON p.inventory_id = pi.id
-				JOIN public.store as s ON pi.store_id = s.id
-		WHERE pc.id = arg_product_category_id or arg_product_category_id is null
-		AND s.id = arg_store_id or arg_store_id is null
-		AND LOWER(p.name) LIKE arg_product_name or arg_product_name is null;
-	
-
-	RETURN;
-END$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100;
-
--- ----------------------------
--- Function structure for test_function
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."test_function"("arg" uuid);
-CREATE OR REPLACE FUNCTION "public"."test_function"("arg" uuid)
-  RETURNS "pg_catalog"."void" AS $BODY$
-	
-	declare
-		currt timestamptz;
-		time_difference INT;
-	
-	BEGIN
-	-- Routine body goes here...
-
-		select modified_at into currt from public.shopping_session where user_id = arg;
-	
-	  time_difference := EXTRACT(EPOCH FROM now() - currt);
-
-    IF time_difference > 600 THEN
-        DELETE FROM public.shopping_session WHERE user_id = arg;
-		ELSE 
-				UPDATE public.shopping_session SET modified_at = now() WHERE user_id = arg;
-    END IF;
-
-	RETURN;
-END$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100;
-
--- ----------------------------
--- Function structure for test_function2
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."test_function2"("arg" uuid);
-CREATE OR REPLACE FUNCTION "public"."test_function2"("arg" uuid)
-  RETURNS "pg_catalog"."uuid" AS $BODY$
-	
-	declare
-		currt timestamptz;
-		time_difference INT;
-		res UUID;
-	
-	BEGIN
-		select modified_at into currt from public.shopping_session where id = arg;
-		
-		if currt is null THEN
-			RETURN NULL;
-		end if;
-	
-	  time_difference := EXTRACT(EPOCH FROM now() - currt);
-
-    IF time_difference > 60 THEN
-        DELETE FROM public.shopping_session WHERE id = arg;
-				RETURN NULL;
-		ELSE 
-				UPDATE public.shopping_session SET modified_at = now() WHERE id = arg;
-				RETURN arg;
-    END IF;
-
-END$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100;
-
--- ----------------------------
 -- Function structure for update_trigger_function
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."update_trigger_function"();
+--DROP FUNCTION IF EXISTS "public"."update_trigger_function"();
 CREATE OR REPLACE FUNCTION "public"."update_trigger_function"()
   RETURNS "pg_catalog"."trigger" AS $BODY$
 DECLARE
@@ -1110,7 +1018,7 @@ $BODY$
 -- ----------------------------
 -- Function structure for uuid_generate_v1
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."uuid_generate_v1"();
+--DROP FUNCTION IF EXISTS "public"."uuid_generate_v1"();
 CREATE OR REPLACE FUNCTION "public"."uuid_generate_v1"()
   RETURNS "pg_catalog"."uuid" AS '$libdir/uuid-ossp', 'uuid_generate_v1'
   LANGUAGE c VOLATILE STRICT
@@ -1119,7 +1027,7 @@ CREATE OR REPLACE FUNCTION "public"."uuid_generate_v1"()
 -- ----------------------------
 -- Function structure for uuid_generate_v1mc
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."uuid_generate_v1mc"();
+--DROP FUNCTION IF EXISTS "public"."uuid_generate_v1mc"();
 CREATE OR REPLACE FUNCTION "public"."uuid_generate_v1mc"()
   RETURNS "pg_catalog"."uuid" AS '$libdir/uuid-ossp', 'uuid_generate_v1mc'
   LANGUAGE c VOLATILE STRICT
@@ -1128,7 +1036,7 @@ CREATE OR REPLACE FUNCTION "public"."uuid_generate_v1mc"()
 -- ----------------------------
 -- Function structure for uuid_generate_v3
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."uuid_generate_v3"("namespace" uuid, "name" text);
+--DROP FUNCTION IF EXISTS "public"."uuid_generate_v3"("namespace" uuid, "name" text);
 CREATE OR REPLACE FUNCTION "public"."uuid_generate_v3"("namespace" uuid, "name" text)
   RETURNS "pg_catalog"."uuid" AS '$libdir/uuid-ossp', 'uuid_generate_v3'
   LANGUAGE c IMMUTABLE STRICT
@@ -1137,7 +1045,7 @@ CREATE OR REPLACE FUNCTION "public"."uuid_generate_v3"("namespace" uuid, "name" 
 -- ----------------------------
 -- Function structure for uuid_generate_v4
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."uuid_generate_v4"();
+--DROP FUNCTION IF EXISTS "public"."uuid_generate_v4"();
 CREATE OR REPLACE FUNCTION "public"."uuid_generate_v4"()
   RETURNS "pg_catalog"."uuid" AS '$libdir/uuid-ossp', 'uuid_generate_v4'
   LANGUAGE c VOLATILE STRICT
@@ -1146,7 +1054,7 @@ CREATE OR REPLACE FUNCTION "public"."uuid_generate_v4"()
 -- ----------------------------
 -- Function structure for uuid_generate_v5
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."uuid_generate_v5"("namespace" uuid, "name" text);
+--DROP FUNCTION IF EXISTS "public"."uuid_generate_v5"("namespace" uuid, "name" text);
 CREATE OR REPLACE FUNCTION "public"."uuid_generate_v5"("namespace" uuid, "name" text)
   RETURNS "pg_catalog"."uuid" AS '$libdir/uuid-ossp', 'uuid_generate_v5'
   LANGUAGE c IMMUTABLE STRICT
@@ -1155,7 +1063,7 @@ CREATE OR REPLACE FUNCTION "public"."uuid_generate_v5"("namespace" uuid, "name" 
 -- ----------------------------
 -- Function structure for uuid_nil
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."uuid_nil"();
+--DROP FUNCTION IF EXISTS "public"."uuid_nil"();
 CREATE OR REPLACE FUNCTION "public"."uuid_nil"()
   RETURNS "pg_catalog"."uuid" AS '$libdir/uuid-ossp', 'uuid_nil'
   LANGUAGE c IMMUTABLE STRICT
@@ -1164,7 +1072,7 @@ CREATE OR REPLACE FUNCTION "public"."uuid_nil"()
 -- ----------------------------
 -- Function structure for uuid_ns_dns
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."uuid_ns_dns"();
+--DROP FUNCTION IF EXISTS "public"."uuid_ns_dns"();
 CREATE OR REPLACE FUNCTION "public"."uuid_ns_dns"()
   RETURNS "pg_catalog"."uuid" AS '$libdir/uuid-ossp', 'uuid_ns_dns'
   LANGUAGE c IMMUTABLE STRICT
@@ -1173,7 +1081,7 @@ CREATE OR REPLACE FUNCTION "public"."uuid_ns_dns"()
 -- ----------------------------
 -- Function structure for uuid_ns_oid
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."uuid_ns_oid"();
+--DROP FUNCTION IF EXISTS "public"."uuid_ns_oid"();
 CREATE OR REPLACE FUNCTION "public"."uuid_ns_oid"()
   RETURNS "pg_catalog"."uuid" AS '$libdir/uuid-ossp', 'uuid_ns_oid'
   LANGUAGE c IMMUTABLE STRICT
@@ -1182,7 +1090,7 @@ CREATE OR REPLACE FUNCTION "public"."uuid_ns_oid"()
 -- ----------------------------
 -- Function structure for uuid_ns_url
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."uuid_ns_url"();
+--DROP FUNCTION IF EXISTS "public"."uuid_ns_url"();
 CREATE OR REPLACE FUNCTION "public"."uuid_ns_url"()
   RETURNS "pg_catalog"."uuid" AS '$libdir/uuid-ossp', 'uuid_ns_url'
   LANGUAGE c IMMUTABLE STRICT
@@ -1191,7 +1099,7 @@ CREATE OR REPLACE FUNCTION "public"."uuid_ns_url"()
 -- ----------------------------
 -- Function structure for uuid_ns_x500
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."uuid_ns_x500"();
+--DROP FUNCTION IF EXISTS "public"."uuid_ns_x500"();
 CREATE OR REPLACE FUNCTION "public"."uuid_ns_x500"()
   RETURNS "pg_catalog"."uuid" AS '$libdir/uuid-ossp', 'uuid_ns_x500'
   LANGUAGE c IMMUTABLE STRICT
@@ -1200,7 +1108,7 @@ CREATE OR REPLACE FUNCTION "public"."uuid_ns_x500"()
 -- ----------------------------
 -- Function structure for validate_user_token
 -- ----------------------------
-DROP FUNCTION IF EXISTS "public"."validate_user_token"("arg" uuid);
+--DROP FUNCTION IF EXISTS "public"."validate_user_token"("arg" uuid);
 CREATE OR REPLACE FUNCTION "public"."validate_user_token"("arg" uuid)
   RETURNS "pg_catalog"."uuid" AS $BODY$
 	
@@ -1234,7 +1142,7 @@ END$BODY$
 -- ----------------------------
 -- View structure for orders_history
 -- ----------------------------
-DROP VIEW IF EXISTS "public"."orders_history";
+--DROP VIEW IF EXISTS "public"."orders_history";
 CREATE VIEW "public"."orders_history" AS  SELECT od.id,
     od.total,
     array_agg(DISTINCT u.email_address) AS user_email,
@@ -1248,7 +1156,7 @@ CREATE VIEW "public"."orders_history" AS  SELECT od.id,
 -- ----------------------------
 -- View structure for product_details
 -- ----------------------------
-DROP VIEW IF EXISTS "public"."product_details";
+--DROP VIEW IF EXISTS "public"."product_details";
 CREATE VIEW "public"."product_details" AS  SELECT p.id,
     p.name,
     p.price,

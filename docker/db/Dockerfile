@@ -5,4 +5,4 @@ ENV POSTGRES_DB db
 ENV POSTGRES_USER docker
 
 COPY . /app/database
-COPY public.sql /docker-entrypoint-initdb.d/
+COPY ./docker/db/myPublic.sql /docker-entrypoint-initdb.d/
