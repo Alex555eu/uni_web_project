@@ -1,12 +1,13 @@
-# uni_web_project
+# Donut Shop
 
 ## Contents
 
 - Introduction
+- Dummy data
 - Presentation
 - Requirements
 - Installation
-- User data
+- Troubleshooting
 - Maintainers
 
 ## Introduction
@@ -16,6 +17,18 @@ Unregistered users can observe/check out some of shops products, in order to add
 login/register, then they can place an order. 
 Admin can add new products, modify or delete existing ones and view orders history.
 Every user has option to change their personal data.
+
+
+## Dummy data
+
+Admin:
+email: `admin@admin.com`
+password: `admin`
+
+User:
+email: `user@user.com`
+password: `user`
+
 
 ## Presentation
 
@@ -37,19 +50,30 @@ Application requirements:
 - [Docker](https://www.docker.com/)
 
 ## Installation 
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/Alex555eu/uni_web_project.git
+   ```
+2. **Start Application:**</br>
+  Move to the folder of cloned project and start application using `docker-compose up` command.
+</br></br>
+3. **Open Application**</br>
+  Once the application is started, you can visit http://localhost:8080/main or http://127.0.0.1:8080/main in your web browser.
 
-Run application using `docker-compose up` command while inside application directory, then
-visit http://localhost:8080/main or http://127.0.0.1:8080/main in your web browser.
 
-## User data
 
-Admin: 
-  email: admin@admin.com
-  password: admin
+## Troubleshooting
 
-User:
-  email: user@user.com
-  password: user
+**Symptoms:**
+- Receiving an error: `Connection failed: SQLSTATE[08006] [7] could not translate host name "db" to address: Try again`
+
+**Possible Causes:**
+- Database container created, but stuck in a stopped state.
+
+**Troubleshooting**
+  - Access the 'Docker Desktop' application and manually start db container, or restart all containers with commands
+  `docker-compose stop` and then `docker-compose start`.
+
 
 ## Maintainers
 

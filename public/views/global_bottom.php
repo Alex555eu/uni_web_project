@@ -5,7 +5,7 @@
 
 <footer>
     <div class="footer-content">
-        <output>&copy; 2024 Your Company. All rights reserved.</output>
+        <output>&copy; 2024 Donut Company.</output>
     </div>
 </footer>
 

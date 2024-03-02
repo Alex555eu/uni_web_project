@@ -21,13 +21,9 @@ class Routing {
             die("Wrong url!");
         }
 
-        // TODO: call controller
         $controller = self::$routes[$action];
-
         $object = new $controller();
-
         $query = parse_url($path, PHP_URL_QUERY );
-
         $object->$action($query);
     }
 

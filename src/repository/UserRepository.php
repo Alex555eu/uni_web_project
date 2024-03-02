@@ -4,10 +4,8 @@ require_once __DIR__.'/Repository.php';
 
 class UserRepository extends Repository {
 
-    public function getUserByEmail(string $email): ?User
-    {
+    public function getUserByEmail(string $email): ?User {
         $conn = $this->database->getConnection();
-
         $stmt = $conn->prepare(
             'SELECT us.*, w.authorization_level FROM public.user AS us
                    LEFT JOIN public.worker as w ON us.id = w.user_id

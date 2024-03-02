@@ -19,7 +19,6 @@
             },
             body: JSON.stringify(data)
         }).then(function (response) {
-            //console.log(response);
             return response.json();
         }).then(function (products) {
             productContainer.innerHTML = '';
@@ -29,7 +28,6 @@
 
     function loadProducts(products) {
         products.forEach(product => {
-            //console.log(product);
             createProduct(product);
         });
     }

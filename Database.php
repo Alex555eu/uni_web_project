@@ -11,25 +11,21 @@ class Database {
     private $host;
     private $database;
 
-    private function __construct()
-    {
+    private function __construct() {
         $this->username = USERNAME;
         $this->password = PASSWORD;
         $this->host = HOST;
         $this->database = DATABASE;
     }
 
-    public static function getInstance()
-    {
+    public static function getInstance() {
         if (!self::$instance) {
             self::$instance = new self();
         }
-
         return self::$instance;
     }
 
-    public function getConnection()
-    {
+    public function getConnection() {
         try {
             $conn = new PDO("pgsql:host=$this->host;port=5432;dbname=$this->database",
                 $this->username,

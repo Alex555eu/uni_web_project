@@ -11,14 +11,6 @@ class OrderController extends AppController {
         $this->orderRepository = new OrderRepository();
     }
 
-    public function orders_history() {
-        $ordersHistory = $this->orderRepository->getOrdersHistory();
-        usort($ordersHistory, function($a, $b){ // reverse the order
-            return $b->getId() - $a->getId();
-        });
-        $this->render('orders_history', ['orders' => $ordersHistory]);
-    }
-
     public function placeAnOrder() {
         if (!$this->isPost()){
             return;

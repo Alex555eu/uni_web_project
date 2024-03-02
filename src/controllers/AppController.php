@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__."/../../autoload.php";
+
 class AppController {
 
     private $request;

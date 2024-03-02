@@ -12,17 +12,6 @@ class CartController extends AppController {
         $this->cartRepository = new CartRepository();
     }
 
-    public function cart() {
-        $this->cartRepository->reloadCart();
-        $cart_items = $this->cartRepository->getAllCartItems();
-        if (empty($cart_items)){
-            $this->render('cart');
-        } else {
-            $this->render('cart', ['cart_items' => $cart_items]);
-        }
-    }
-
-
     public function addProductToCart() {
         if (isset($_COOKIE['user_token'])) {
             $validate = new SecurityController();

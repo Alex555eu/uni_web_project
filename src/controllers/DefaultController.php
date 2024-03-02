@@ -9,10 +9,6 @@ class DefaultController extends AppController {
         parent::__construct();
     }
 
-    public function index() {
-        $this->render('index');
-    }
-
     public function main() {
         $productsRepository = new ProductRepository();
         $products = $productsRepository->getAllProducts();
@@ -62,11 +58,35 @@ class DefaultController extends AppController {
         $this->render('user');
     }
 
-    public function logout() {
-        $repo = new UserRepository();
-        $repo->deleteUserToken();
-        $url = "http://" . $_SERVER['HTTP_HOST'];
-        header("Location: {$url}/login");
+    public function cart() {
+        $repo = new CartRepository();
+        $repo->reloadCart();
+        $cart_items = $repo->getAllCartItems();
+        if (empty($cart_items)){
+            $this->render('cart');
+        } else {
+            $this->render('cart', ['cart_items' => $cart_items]);
+        }
+    }
+
+    public function select_product(string $argument) {
+        $argument = intval(filter_var($argument, FILTER_SANITIZE_NUMBER_INT)); // returns 0 on failure
+        if ($argument != 0) {
+            $repo = new ProductRepository();
+            $products = $repo->getProductById($argument);
+            $this->render('select_product', ['product' => $products]);
+        }
+        else
+            die("Wrong url!");
+    }
+
+    public function orders_history() {
+        $repo = new OrderRepository();
+        $ordersHistory = $repo->getOrdersHistory();
+        usort($ordersHistory, function($a, $b){ // reverse the order
+            return $b->getId() - $a->getId();
+        });
+        $this->render('orders_history', ['orders' => $ordersHistory]);
     }
 
 

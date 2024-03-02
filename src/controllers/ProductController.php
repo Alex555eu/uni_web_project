@@ -17,16 +17,6 @@ class ProductController extends AppController {
         $this->productRepository = new ProductRepository();
     }
 
-    public function select_product(string $argument) {
-        $argument = intval(filter_var($argument, FILTER_SANITIZE_NUMBER_INT)); // returns 0 on failure
-        if ($argument != 0) {
-            $products = $this->productRepository->getProductById($argument);
-            $this->render('select_product', ['product' => $products]);
-        }
-        else
-            die("Wrong url!");
-    }
-
     public function deleteProduct(string $argument) {
         $argument = intval(filter_var($argument, FILTER_SANITIZE_NUMBER_INT)); // returns 0 on failure
         if ($argument != 0) {
@@ -63,7 +53,6 @@ class ProductController extends AppController {
                 dirname(__DIR__).$path
             );
 
-            //$modifiedProduct = new Product($_POST['product_id'], $_POST['name'], $_POST['price'], $trimmedPath, $_POST['description'], 2, $_POST['quantity']);
             $modifiedProduct = $this->productRepository->getProductById($_POST['product_id']);
             $modifiedProduct->setName($_POST['name']);
             $modifiedProduct->setPrice($_POST['price']);

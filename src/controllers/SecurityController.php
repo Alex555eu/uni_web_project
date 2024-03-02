@@ -30,6 +30,13 @@ class SecurityController extends AppController {
 
     }
 
+    public function logout() {
+        $repo = new UserRepository();
+        $repo->deleteUserToken();
+        $url = "http://" . $_SERVER['HTTP_HOST'];
+        header("Location: {$url}/login");
+    }
+
     public function registerSecure() {
         if (!$this->isPost()) {
             return $this->render('login');
@@ -38,7 +45,7 @@ class SecurityController extends AppController {
         $surname = $_POST['surname'];
         $email = $_POST['email'];
         $options = [
-            'cost' => 12, // do not touch
+            'cost' => 12,
         ];
         $password = password_hash($_POST['password'], PASSWORD_BCRYPT, $options);
 
@@ -59,8 +66,8 @@ class SecurityController extends AppController {
             $conn = $db->getConnection();
             $conn->beginTransaction();
             try {
-                $stmt = $conn->prepare( // returns token_id on success or null
-                    'SELECT validate_user_token(:token_id)'
+                $stmt = $conn->prepare(
+                    'SELECT validate_user_token(:token_id)' // returns token_id on success or null
                 );
                 $stmt->bindParam(':token_id', $_COOKIE['user_token'], PDO::PARAM_STR);
                 $stmt->execute();
